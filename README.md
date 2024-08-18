@@ -1,2 +1,2 @@
 # microservice-python-pp
-Микросервис на Python+React для проекта PrettyPet.
+Микросервис на Python для проекта PrettyPet.
