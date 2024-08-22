@@ -1,10 +1,10 @@
 # Конфигурации для подключения и настройки базы данных,
 # включая параметры подключения, использование пула соединений и настройки репликации.
 
-
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+from .common import BASE_DIR
+
 
 DATABASES = {
     'default': {
