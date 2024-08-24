@@ -1,0 +1,6 @@
+WARNING - 2024-08-26 15:05:53,885 - logging - example WARNING message
+ERROR - 2024-08-26 15:05:53,888 - logging - example ERROR message
+CRITICAL - 2024-08-26 15:05:53,889 - logging - example CRITICAL message
+WARNING - 2024-08-26 15:05:54,740 - logging - example WARNING message
+ERROR - 2024-08-26 15:05:54,740 - logging - example ERROR message
+CRITICAL - 2024-08-26 15:05:54,741 - logging - example CRITICAL message
