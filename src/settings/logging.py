@@ -19,7 +19,7 @@ LOGGING = {
 
     'formatters': {
         'custom': {
-            'format': '{levelname} - {asctime} - {module} - {message}',
+            'format': '{levelname} - {asctime} - {pathname}:{lineno} - {funcName}() - {message}',
             'style': '{',
         },
     },
@@ -47,7 +47,7 @@ LOGGING = {
 }
 
 
-def example_logs(logging_conf: dict) -> None:
+def example_logs(logging_conf: dict = LOGGING) -> None:
     """
     Processes examples of logs of different levels.
 
@@ -61,8 +61,7 @@ def example_logs(logging_conf: dict) -> None:
 
     :raises ImportError: If the logging.config module could not be imported.
     :raises KeyError: If a required key is missing from the logging configuration.
-    :raises Exception: To handle any other exceptions that may occur during setting up or using
-    logging.
+    :raises Exception: To handle any other exceptions that may occur during setting up or using logging.
     """
 
     try:
@@ -84,6 +83,3 @@ def example_logs(logging_conf: dict) -> None:
         print(f'Logging configuration error: missing key {e}')
     except Exception as e:
         print(f'An error occurred while setting up logging: {e}')
-
-
-example_logs(LOGGING)
