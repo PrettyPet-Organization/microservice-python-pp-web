@@ -1,5 +1,4 @@
 from django.http import JsonResponse
-from django.conf import settings
 from rest_framework.views import APIView
 
 
@@ -15,5 +14,5 @@ class CheckLogs(APIView):
 
         data = {'message': 'Check logs'}
 
-        example_logs(LOGGING)
+        example_logs()
         return JsonResponse(data)

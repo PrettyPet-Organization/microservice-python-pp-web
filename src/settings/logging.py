@@ -47,7 +47,7 @@ LOGGING = {
 }
 
 
-def example_logs(logging_conf: dict) -> None:
+def example_logs(logging_conf: dict = LOGGING) -> None:
     """
     Processes examples of logs of different levels.
 
