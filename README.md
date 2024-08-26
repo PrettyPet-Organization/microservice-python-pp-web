@@ -14,11 +14,14 @@ Unit-тесты находятся внутри папки каждого из �
 ### Документация:
 [drf-spectacular](https://drf-spectacular.readthedocs.io/en/latest/)
 
+Почему именно DRF Spectacular?
+drf-spectacular - единственный проект, который сейчас активно поддерживается. django-rest-swagger и drf-yasg устарели и не обновлялись уже несколько лет.
+
 - `docs/` - скачать документацию .yml
 - `docs/swagger-ui/` - документация swagger-ui
 - `docs/redoc/` - документация redoc
 
-
+drf-spectacular - подключен к классу drf_spectacular.openapi.AutoSchema, то есть Swagger-UI и ReDoc документации будут строиться сами. Для более гибкой настройки в основном нужно использовать декоратор [`@extend_schema`](https://drf-spectacular.readthedocs.io/en/latest/readme.html#customization-by-using-extend-schema).
 
 ## <p align="center" >Всем добра!</p>
 <p align="center">
