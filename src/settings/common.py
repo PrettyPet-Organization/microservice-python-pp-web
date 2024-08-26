@@ -5,41 +5,40 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-DOTENV_PATH = BASE_DIR.parent / '.env.template'
+DOTENV_PATH = BASE_DIR.parent / ".env.template"
 load_dotenv(dotenv_path=DOTENV_PATH)
 
-ROOT_URLCONF = 'main.urls'
+ROOT_URLCONF = "main.urls"
 
 INTERNAL_IPS = [
-    '127.0.0.1',
+    "127.0.0.1",
 ]
 
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 DEBUG = True
 
 CSRF_TRUSTED_ORIGINS = [
-    os.getenv('MAIN_URL', 'http://'),
+    os.getenv("MAIN_URL", "http://"),
 ]
 
-CSRF_COOKIE_DOMAIN = os.getenv('CSRF_COOKIE_DOMAIN', '.subdomain.com')
+CSRF_COOKIE_DOMAIN = os.getenv("CSRF_COOKIE_DOMAIN", ".subdomain.com")
 
-DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 TRACKING_ACTIVITY = None
 
 SWAGGER_SETTINGS = {
-    'SECURITY_DEFINITIONS': {
-        'Token YOUR_TOKEN': {
-            'type': 'apikey',
-            'in': 'header',
+    "SECURITY_DEFINITIONS": {
+        "Token YOUR_TOKEN": {
+            "type": "apikey",
+            "in": "header",
         },
     },
-    'USE_SESSION_AUTH': False,
-    'JSON_EDITOR': True,
+    "USE_SESSION_AUTH": False,
+    "JSON_EDITOR": True,
 }
 
 DJANGO_SWAGGER = None
