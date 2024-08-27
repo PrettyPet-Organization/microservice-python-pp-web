@@ -42,3 +42,14 @@ SWAGGER_SETTINGS = {
 }
 
 DJANGO_SWAGGER = None
+
+# Настройки документации drf-spectacular
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Pretty Pet',
+    'DESCRIPTION': 'Pretty Pet test documentation',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'SWAGGER_UI_DIST': 'SIDECAR',
+    'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
+    'REDOC_DIST': 'SIDECAR',
+}
