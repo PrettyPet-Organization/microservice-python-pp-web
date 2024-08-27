@@ -4,6 +4,8 @@ click==8.1.7
 colorama==0.4.6
 Django==4.2.13
 djangorestframework==3.15.2
+drf-spectacular==0.27.2
+drf-spectacular-sidecar==2024.7.1
 isort==5.13.2
 mypy-extensions==1.0.0
 packaging==24.1
