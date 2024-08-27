@@ -1,7 +1,8 @@
-from .common import *
 from .apps import *
 from .auth import *
 from .celery import *
+from .common import *
+from .database import *
 from .drf import *
 from .i18n import *
 from .logging import *
@@ -11,3 +12,4 @@ from .sessions import *
 from .static import *
 from .templates import *
 from .database import *
+

@@ -29,3 +29,4 @@ def login(request):
 class ProfileView(View, LoginRequiredMixin):
     def get(self):
         pass
+
