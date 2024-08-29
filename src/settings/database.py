@@ -2,13 +2,11 @@
 # включая параметры подключения, использование пула соединений и настройки репликации.
 
 
-from pathlib import Path
-
-BASE_DIR = Path(__file__).resolve().parent.parent
+from .common import BASE_DIR
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }

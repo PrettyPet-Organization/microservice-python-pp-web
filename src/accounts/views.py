@@ -85,3 +85,4 @@ class VerificationView(View):
 class ProfileView(View, LoginRequiredMixin):
     def get(self):
         pass
+
