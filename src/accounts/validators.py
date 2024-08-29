@@ -16,7 +16,6 @@ def in_keyboard(sub: str) -> bool:
 
 # Валидация пароля
 def validate_password(value):
-    print("Проверка пароля")
     # Проверка длины
     if len(value) < 8:
         raise ValidationError(_('Пароль должен быть не менее 8 символов.'))
@@ -48,6 +47,7 @@ def validate_city(value: str):
     # Проверка на то не пуста ли значение и содержит ли заглавную букву
     if value and not value[0].isupper():
         raise ValidationError(_('Первая буква должна быть заглавной.'))
+
 
 
 def validate_phone_number(phone_number: str):
