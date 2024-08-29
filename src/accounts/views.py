@@ -1,12 +1,10 @@
-from django.shortcuts import HttpResponse, redirect, render, get_object_or_404
+from django.shortcuts import HttpResponse, redirect, render
 from .forms import UserRegisterForm, UserLoginForm
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from accounts.models.profile import Profile
 from settings.auth import FAILED_LOGIN_ATTEMPT_ID
 from django.contrib.auth import authenticate, login
-
-from .models import CustomUser
 
 
 def say_hi(request):

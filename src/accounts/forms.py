@@ -2,7 +2,7 @@ from django import forms
 from accounts.models.user import CustomUser
 from accounts.models.profile import Profile
 from accounts.validators import validate_password
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import gettext_lazy as _
 
 
