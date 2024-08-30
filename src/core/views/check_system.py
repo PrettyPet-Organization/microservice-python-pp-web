@@ -2,7 +2,6 @@ import inspect
 import logging.config
 from functools import wraps
 
-
 from django.conf import settings
 from django.http import JsonResponse
 from django.utils.translation import gettext_lazy as _
