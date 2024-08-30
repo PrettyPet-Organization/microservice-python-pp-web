@@ -127,7 +127,7 @@ class CheckSystem(APIView):
         :rtype: JsonResponse
         """
 
-        # Finds all methods that are checks (decorated with _check_function)
+        # Finds all methods that are checks (decorated with _check_method)
         checks = [
             method
             for name, method in inspect.getmembers(self, predicate=inspect.ismethod)
