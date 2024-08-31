@@ -9,7 +9,7 @@ https://dbdiagram.io/d/Copy-of-PrettyPet-66c5e43ea346f9518caee2e2 <br>
 Редактировать чертёж может Александр (tg: chutzp4h, discord: ne_pedofil_a_beta_tester).
 
 ### Чертёж в виде svg
-![Copy of PrettyPet.svg](README_IMAGES%2FCopy%20of%20PrettyPet.svg)
+![Pretty Pet.svg](README_IMAGES%2FPretty%20Pet.svg)
 
 ### Чертёж в виде DBML (Database Markup Language)
 ```dbml
