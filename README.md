@@ -86,11 +86,6 @@ drf-spectacular - подключен к классу drf_spectacular.openapi.Aut
 - Регистрации данных в поле Profile.
 - Входа в приложение (переход на auth/hi после успешного входа).
 
-## <p align="center" >Всем добра!</p>
-<p align="center">
-  <img width="300" height="300" src="https://media.tenor.com/67iB7B7g59YAAAAM/siu-ronaldo-siu.gif">
-</p>
-
 ## Модели:
 - Описание:
   -  Модели составлены на основании описания проекта и бизнес-моделей.
@@ -101,3 +96,9 @@ https://dbdiagram.io/d/Pretty-Pet-66c894f4a346f9518ce84d0f <br>
 ![Pretty Pet.svg](README_FILES%2FREADME_IMAGES%2FPretty%20Pet.svg)  
 - Чертёж в виде DBML (Database Markup Language): <br>
 [database_structure.md](README_FILES%2FREADME_TEXT_FILES%2Fdatabase_structure.md)
+
+## <p align="center" >Всем добра!</p>
+<p align="center">
+  <img width="300" height="300" src="https://media.tenor.com/67iB7B7g59YAAAAM/siu-ronaldo-siu.gif">
+</p>
+
