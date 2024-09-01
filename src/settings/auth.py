@@ -15,4 +15,5 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = "accounts.CustomUser"
+AUTH_USER_MODEL = 'accounts.CustomUser'
+FAILED_LOGIN_ATTEMPT_ID = 'failed_login_attempt'
