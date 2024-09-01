@@ -11,7 +11,7 @@ def say_hi(request):
     return HttpResponse('<h1>Первые строчки проекта созданы</h1>')
 
 
-# Регистрация поользователя
+# Регистрация пользователя
 class UserRegisterView(View):
     template_name = 'register.html'
 
@@ -62,7 +62,7 @@ class UserLoginView(View):
         return render(request, self.template_name, {'form': form})
 
 
-# Аутентификация по коду из почте (пока не работает!)
+# Аутентификация по коду из почты (пока не работает!)
 '''
 class VerificationView(View):
     def post(self, request):
