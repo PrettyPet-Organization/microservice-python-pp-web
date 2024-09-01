@@ -3,7 +3,7 @@ import logging.config
 from functools import wraps
 
 from django.conf import settings
-from django.http import JsonResponse
+from django.http import HttpRequest, JsonResponse
 from django.utils.translation import gettext_lazy as _
 from rest_framework.views import APIView
 
@@ -25,12 +25,14 @@ class CheckSystem(APIView):
         """
 
         super().__init__(**kwargs)
-        self.DEFAULT_ERROR_MESSAGE = _("Check {item} failed.")
-        self.DEFAULT_SUCCESS_MESSAGE = _("Successfully configured!")
-        self.data = {}
+        self.DEFAULT_ERROR_MESSAGE: str = _("Check {item} failed.")
+        self.DEFAULT_SUCCESS_MESSAGE: str = _("Successfully configured!")
+        self.data: dict = {}
 
     @staticmethod
-    def _check_method(data_item_name: str, error_message=None, success_message=None):
+    def _check_method(
+        data_item_name: str, error_message: str = None, success_message: str = None
+    ):
         """
         Decorator for checking methods.
 
@@ -96,16 +98,17 @@ class CheckSystem(APIView):
         :raises Exception: To handle any other exceptions that may occur during setting up or using logging.
         """
 
-        logging_conf = settings.LOGGING
-        logging.config.dictConfig(logging_conf)
-        logger = logging.getLogger(__name__)
-
         try:
+            logging_conf = settings.LOGGING
+            logging.config.dictConfig(logging_conf)
+            logger = logging.getLogger(__name__)
+
             logger.debug("example DEBUG message")
             logger.info("example INFO message")
             logger.warning("example WARNING message")
             logger.error("example ERROR message")
             logger.critical("example CRITICAL message")
+
             return True
 
         except ImportError as e:
@@ -115,7 +118,7 @@ class CheckSystem(APIView):
         except Exception as e:
             print(_(f"An error occurred while setting up logging: {e}"))
 
-    def get(self, request) -> JsonResponse:
+    def get(self, request: HttpRequest) -> JsonResponse:
         """
         Performs all checks and returns their results as a JSON response.
 
@@ -130,9 +133,7 @@ class CheckSystem(APIView):
         checks = [
             method
             for name, method in inspect.getmembers(self, predicate=inspect.ismethod)
-            if getattr(
-                method, "__is_check_method__", False
-            )  # Checks for the custom attribute
+            if getattr(method, "__is_check_method__", False)
         ]
         for check in checks:
             check()
