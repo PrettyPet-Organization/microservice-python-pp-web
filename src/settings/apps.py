@@ -2,6 +2,11 @@
 
 INSTALLED_APPS = [
     "accounts.apps.AuthsConfig",
+    "core.apps.CoreConfig",
+    "profiles.apps.ProfilesConfig",
+    "projects.apps.ProjectsConfig",
+    "hackathons.apps.HackathonsConfig",
+    "common.apps.CommonConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
