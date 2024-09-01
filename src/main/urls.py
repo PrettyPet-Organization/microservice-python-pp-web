@@ -1,11 +1,10 @@
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import include, path
 from drf_spectacular.views import (
     SpectacularAPIView,
-    SpectacularSwaggerView,
     SpectacularRedocView,
+    SpectacularSwaggerView,
 )
-
 
 urlpatterns = [
     path("docs/", SpectacularAPIView.as_view(), name="schema"),

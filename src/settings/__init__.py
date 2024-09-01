@@ -11,5 +11,3 @@ from .middleware import *
 from .sessions import *
 from .static import *
 from .templates import *
-from .database import *
-

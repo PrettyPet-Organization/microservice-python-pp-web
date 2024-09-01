@@ -1,19 +1,21 @@
-from django.shortcuts import HttpResponse, redirect, render
-from .forms import UserRegisterForm, UserLoginForm
-from django.views import View
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import HttpResponse, redirect, render
+from django.views import View
+
 from accounts.models.profile import Profile
 from settings.auth import FAILED_LOGIN_ATTEMPT_ID
-from django.contrib.auth import authenticate, login
+
+from .forms import UserLoginForm, UserRegisterForm
 
 
 def say_hi(request):
-    return HttpResponse('<h1>Первые строчки проекта созданы</h1>')
+    return HttpResponse("<h1>Первые строчки проекта созданы</h1>")
 
 
 # Регистрация поользователя
 class UserRegisterView(View):
-    template_name = 'register.html'
+    template_name = "register.html"
 
     def get(self, request):
         form = UserRegisterForm()
@@ -24,17 +26,17 @@ class UserRegisterView(View):
         if form.is_valid():
             user = form.save()
             Profile.objects.create(user=user)
-            return redirect('login')
+            return redirect("login")
         else:
             return render(request, self.template_name, {"form": form})
 
 
 class UserLoginView(View):
-    template_name = 'login.html'
+    template_name = "login.html"
 
     def get(self, request):
         form = UserLoginForm()
-        return render(request, self.template_name, {'form': form})
+        return render(request, self.template_name, {"form": form})
 
     def post(self, request):
         form = UserLoginForm(request.POST)
@@ -43,27 +45,27 @@ class UserLoginView(View):
             request.session[FAILED_LOGIN_ATTEMPT_ID] = 0
 
         if form.is_valid():
-            email = form.cleaned_data.get('email')
-            password = form.cleaned_data.get('password')
+            email = form.cleaned_data.get("email")
+            password = form.cleaned_data.get("password")
             user = authenticate(request, email=email, password=password)
 
             if user is not None:
                 login(request, user)
                 request.session[FAILED_LOGIN_ATTEMPT_ID] = 0
-                return redirect('say_hi')
+                return redirect("say_hi")
             else:
                 request.session[FAILED_LOGIN_ATTEMPT_ID] += 1
-                form.add_error(None, 'Некорректные данные')
+                form.add_error(None, "Некорректные данные")
                 if request.session[FAILED_LOGIN_ATTEMPT_ID] >= 3:
-                    form.add_error(None, 'Попробуйте зайти с помощью кода из почты')
+                    form.add_error(None, "Попробуйте зайти с помощью кода из почты")
         else:
             request.session[FAILED_LOGIN_ATTEMPT_ID] += 1
 
-        return render(request, self.template_name, {'form': form})
+        return render(request, self.template_name, {"form": form})
 
 
 # Аутентификация по коду из почте (пока не работает!)
-'''
+"""
 class VerificationView(View):
     def post(self, request):
         form = CodeVerificationForm(request.POST)
@@ -79,10 +81,9 @@ class VerificationView(View):
             else:
                 form.add_error(None, 'Неверный код.')
         return render(request, 'verification.html', {'form': form})
-'''
+"""
 
 
 class ProfileView(View, LoginRequiredMixin):
     def get(self):
         pass
-
