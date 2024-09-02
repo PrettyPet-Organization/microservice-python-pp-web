@@ -3,7 +3,7 @@ from .forms import UserRegisterForm, UserLoginForm
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from accounts.models.profile import Profile
-from settings.auth import FAILED_LOGIN_ATTEMPT_ID
+from settings.sessions import FAILED_LOGIN_ATTEMPTS_LIMIT
 from django.contrib.auth import authenticate, login
 
 
@@ -11,7 +11,6 @@ def say_hi(request):
     return HttpResponse('<h1>Первые строчки проекта созданы</h1>')
 
 
-# Регистрация пользователя
 class UserRegisterView(View):
     template_name = 'register.html'
 
@@ -31,16 +30,17 @@ class UserRegisterView(View):
 
 class UserLoginView(View):
     template_name = 'login.html'
+    failed_login_attempt_key = 'failed_login_attempt_count'
 
     def get(self, request):
         form = UserLoginForm()
         return render(request, self.template_name, {'form': form})
 
     def post(self, request):
+
         form = UserLoginForm(request.POST)
 
-        if FAILED_LOGIN_ATTEMPT_ID not in request.session:
-            request.session[FAILED_LOGIN_ATTEMPT_ID] = 0
+        request.session.setdefault(self.failed_login_attempt_key, 0)
 
         if form.is_valid():
             email = form.cleaned_data.get('email')
@@ -49,15 +49,18 @@ class UserLoginView(View):
 
             if user is not None:
                 login(request, user)
-                request.session[FAILED_LOGIN_ATTEMPT_ID] = 0
+                request.session[self.failed_login_attempt_key] = 0
                 return redirect('say_hi')
             else:
-                request.session[FAILED_LOGIN_ATTEMPT_ID] += 1
-                form.add_error(None, 'Некорректные данные')
-                if request.session[FAILED_LOGIN_ATTEMPT_ID] >= 3:
-                    form.add_error(None, 'Попробуйте зайти с помощью кода из почты')
+                request.session[self.failed_login_attempt_key] += 1
+                error_msg = 'Неправильно указали пароль или почту'
+                form.add_error(None, error=error_msg)
         else:
-            request.session[FAILED_LOGIN_ATTEMPT_ID] += 1
+            request.session[self.failed_login_attempt_key] += 1
+
+        if request.session[self.failed_login_attempt_key] >= FAILED_LOGIN_ATTEMPTS_LIMIT:
+            error_msg = 'Попробуйте зайти с помощью почты'
+            form.add_error(None, error=error_msg)
 
         return render(request, self.template_name, {'form': form})
 
@@ -85,4 +88,3 @@ class VerificationView(View):
 class ProfileView(View, LoginRequiredMixin):
     def get(self):
         pass
-
