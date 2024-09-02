@@ -1,13 +1,18 @@
+import logging
 from django.shortcuts import HttpResponse, redirect, render
-from .forms import UserRegisterForm, UserLoginForm
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
-from accounts.models.profile import Profile
 from django.contrib.auth import authenticate, login
+from accounts.models.profile import Profile
+from .forms import UserRegisterForm, UserLoginForm
 from settings.sessions import FAILED_LOGIN_ATTEMPTS_LIMIT
+
+# Создание логгера
+logger = logging.getLogger(__name__)
 
 
 def say_hi(request):
+    logger.info("Visited say_hi view")
     return HttpResponse("<h1>Первые строчки проекта созданы</h1>")
 
 
@@ -17,6 +22,7 @@ class UserRegisterView(View):
 
     def get(self, request):
         form = UserRegisterForm()
+        logger.info("Rendering UserRegisterForm on GET request")
         return render(request, self.template_name, {"form": form})
 
     def post(self, request):
@@ -24,8 +30,10 @@ class UserRegisterView(View):
         if form.is_valid():
             user = form.save()
             Profile.objects.create(user=user)
+            logger.info(f"User registered successfully: {user.username}")
             return redirect("login")
         else:
+            logger.warning("User registration failed with errors")
             return render(request, self.template_name, {"form": form})
 
 
@@ -35,12 +43,11 @@ class UserLoginView(View):
 
     def get(self, request):
         form = UserLoginForm()
+        logger.info("Rendering UserLoginForm on GET request")
         return render(request, self.template_name, {"form": form})
 
     def post(self, request):
         form = UserLoginForm(request.POST)
-
-        # Установите значение по умолчанию для счетчика попыток
         request.session.setdefault(self.failed_login_attempt_key, 0)
 
         if form.is_valid():
@@ -51,20 +58,20 @@ class UserLoginView(View):
             if user is not None:
                 login(request, user)
                 request.session[self.failed_login_attempt_key] = 0
+                logger.info(f"User logged in successfully: {email}")
                 return redirect("say_hi")
             else:
                 request.session[self.failed_login_attempt_key] += 1
                 error_msg = "Неправильно указали пароль или почту"
                 form.add_error(None, error_msg)
+                logger.warning(f"Failed login attempt for email: {email}")
         else:
             request.session[self.failed_login_attempt_key] += 1
+            logger.warning("Form validation failed during login attempt")
 
-        # Проверка на лимит попыток входа
-        if (
-            request.session[self.failed_login_attempt_key]
-            >= FAILED_LOGIN_ATTEMPTS_LIMIT
-        ):
+        if request.session[self.failed_login_attempt_key] >= FAILED_LOGIN_ATTEMPTS_LIMIT:
             form.add_error(None, "Попробуйте зайти с помощью почты")
+            logger.error(f"Login attempts exceeded limit for email: {email}")
 
         return render(request, self.template_name, {"form": form})
 
@@ -78,17 +85,19 @@ class VerificationView(View):
             verification_word = form.cleaned_data.get('verification_word')
 
             if verification_word == request.session.get('verification_code'):
-                # После успешной проверки кода, пользователю предоставляется доступ
                 request.session['failed_login_attempts'] = 0
                 user = CustomUser.objects.get(username=request.session.get('username'))
                 login(request, user)
+                logger.info(f"User verified and logged in: {user.username}")
                 return redirect('say_hi')
             else:
                 form.add_error(None, 'Неверный код.')
+                logger.warning("Invalid verification code entered")
         return render(request, 'verification.html', {'form': form})
 """
 
 
 class ProfileView(View, LoginRequiredMixin):
-    def get(self):
+    def get(self, request):
+        logger.info("Rendering ProfileView")
         pass
