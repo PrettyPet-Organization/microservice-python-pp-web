@@ -69,7 +69,10 @@ class UserLoginView(View):
             request.session[self.failed_login_attempt_key] += 1
             logger.warning("Form validation failed during login attempt")
 
-        if request.session[self.failed_login_attempt_key] >= FAILED_LOGIN_ATTEMPTS_LIMIT:
+        if (
+            request.session[self.failed_login_attempt_key]
+            >= FAILED_LOGIN_ATTEMPTS_LIMIT
+        ):
             form.add_error(None, "Попробуйте зайти с помощью почты")
             logger.error(f"Login attempts exceeded limit for email: {email}")
 
