@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+</head>
+<body>
+<h2>Вход в систему</h2>
+<form method="post" action="{% url 'login' %}">
+  {% csrf_token %}
+
+  <!-- Вывод общих ошибок формы -->
+  {% if form.non_field_errors %}
+  <div class="error">
+    <ul>
+      {% for error in form.non_field_errors %}
+      <li>{{ error }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  <!-- Вывод ошибок для каждого поля -->
+  {% for field in form %}
+  <div>
+    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+    {{ field }}
+    {% if field.errors %}
+    <div class="error">
+      <ul>
+        {% for error in field.errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+  </div>
+  {% endfor %}
+  <p>Забыли пароль? <a href="#">Отправить код в почту</a></p>
+  <button type="submit">Войти</button>
+</form>
+</body>
+</html>
