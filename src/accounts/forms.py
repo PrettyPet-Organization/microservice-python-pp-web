@@ -7,11 +7,17 @@ from accounts.models.user import CustomUser
 from accounts.validators import validate_password
 
 
-# форма для регистрации
 class UserRegisterForm(UserCreationForm):
-    email = forms.EmailField(required=True)
+    email = forms.EmailField(
+        required=True,
+        label=_("Почта"),
+        error_messages={
+            "invalid": _("Некорректный формат электронной почты"),
+            "required": _("Введите адрес электронной почты"),
+        },
+    )
     password1 = forms.CharField(
-        widget=forms.PasswordInput(), validators=[validate_password]
+        widget=forms.PasswordInput(), validators=[validate_password], label=_("Пароль")
     )
     password2 = forms.CharField(
         widget=forms.PasswordInput(), label=_("Подтверждение пароля")
@@ -26,6 +32,9 @@ class UserRegisterForm(UserCreationForm):
     class Meta:
         model = CustomUser
         fields = ["username", "email", "password1", "password2", "code_word"]
+        labels = {
+            "username": _("Имя пользователя"),
+        }
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
@@ -35,10 +44,15 @@ class UserRegisterForm(UserCreationForm):
         return password2
 
 
-# форма для входа
 class UserLoginForm(forms.Form):
-    email = forms.EmailField(label="Email")
-    password = forms.CharField(widget=forms.PasswordInput, label="Password")
+    email = forms.EmailField(
+        label=_("Почта"),
+        error_messages={
+            "invalid": _("Некорректный формат электронной почты"),
+            "required": _("Введите адрес электронной почты"),
+        },
+    )
+    password = forms.CharField(widget=forms.PasswordInput, label=_("Пароль"))
 
 
 # форма для верификации кода из почты

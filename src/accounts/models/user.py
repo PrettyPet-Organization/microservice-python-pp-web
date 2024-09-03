@@ -1,9 +1,7 @@
 from hashlib import sha256
-
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-
 from accounts.managers import CustomUserManager
 from accounts.validators import validate_password, validate_phone_number
 
@@ -41,3 +39,6 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.username
+
+    class Meta:
+        app_label = "accounts"
