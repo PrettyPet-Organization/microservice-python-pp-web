@@ -8,7 +8,7 @@ from accounts.managers import CustomUserManager
 from accounts.validators import validate_password, validate_phone_number
 
 
-class CustomUsers(AbstractUser):
+class CustomUser(AbstractUser):
     email = models.EmailField(_("Электронный адрес"), unique=True, max_length=255)
     phone_number = models.CharField(
         _("Номер телефона"),
@@ -41,3 +41,6 @@ class CustomUsers(AbstractUser):
 
     def __str__(self):
         return self.username
+
+    class Meta:
+        app_label = "accounts"

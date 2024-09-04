@@ -15,7 +15,21 @@ LOGS_FILE_NAME = "logs"
 
 
 class DebugAndInfoOnlyFilter(logging.Filter):
+    """
+    A logging filter that only allows DEBUG and INFO level log records to pass through.
+
+    This filter can be added to a logger or a handler to ensure that only messages
+    with a severity level of DEBUG or INFO are processed. Messages with other levels,
+    such as WARNING, ERROR, or CRITICAL, will be ignored.
+    """
+
     def filter(self, record):
+        """
+        Determines whether the specified log record should be passed through the filter.
+
+        Only DEBUG and INFO level records will return True; all others will return False.
+        """
+
         return record.levelno in (logging.DEBUG, logging.INFO)
 
 
@@ -35,9 +49,10 @@ LOGGING = {
     },
     "handlers": {
         "console": {
-            "level": "DEBUG",
             "class": "logging.StreamHandler",
-            "filters": ["debug_and_info_only_filter"],
+            "filters": [
+                "debug_and_info_only_filter",
+            ],
             "formatter": "custom_formatter",
         },
         "file": {
@@ -50,7 +65,10 @@ LOGGING = {
         },
     },
     "root": {
-        "handlers": ["console", "file"],
+        "handlers": [
+            "console",
+            "file",
+        ],
         "level": "DEBUG",
     },
 }
