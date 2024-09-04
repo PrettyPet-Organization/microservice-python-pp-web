@@ -1,11 +1,14 @@
 import logging
+
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import HttpResponse, redirect, render
 from django.views import View
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth import authenticate, login
+
 from accounts.models.profile import Profile
-from .forms import UserRegisterForm, UserLoginForm
 from settings.sessions import FAILED_LOGIN_ATTEMPTS_LIMIT
+
+from .forms import UserLoginForm, UserRegisterForm
 
 # Создание логгера
 logger = logging.getLogger(__name__)

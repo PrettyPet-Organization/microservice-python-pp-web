@@ -1,13 +1,18 @@
 # Настройки для регистрации приложений Django и их конфигураций
 
 INSTALLED_APPS = [
+    "accounts.apps.AuthsConfig",
+    "core.apps.CoreConfig",
+    "profiles.apps.ProfilesConfig",
+    "projects.apps.ProjectsConfig",
+    "hackathons.apps.HackathonsConfig",
+    "common.apps.CommonConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "accounts.apps.AccountsConfig",
     "drf_spectacular",
     "drf_spectacular_sidecar",
 ]

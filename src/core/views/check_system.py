@@ -3,8 +3,9 @@ import logging.config
 from functools import wraps
 
 from django.conf import settings
-from django.http import HttpRequest, JsonResponse
 from django.utils.translation import gettext_lazy as _
+from rest_framework.request import Request
+from rest_framework.response import Response
 from rest_framework.views import APIView
 
 
@@ -118,15 +119,15 @@ class CheckSystem(APIView):
         except Exception as e:
             print(_(f"An error occurred while setting up logging: {e}"))
 
-    def get(self, request: HttpRequest) -> JsonResponse:
+    def get(self, request: Request) -> Response:
         """
         Performs all checks and returns their results as a JSON response.
 
-        :param request: The HTTP request object.
-        :type request: HttpRequest
+        :param request: The rest_framework Request object.
+        :type request: Request
 
-        :return: JsonResponse with the results of all checks.
-        :rtype: JsonResponse
+        :return: Response with the results of all checks.
+        :rtype: Response
         """
 
         # Finds all methods that are checks (decorated with _check_method)
@@ -138,4 +139,4 @@ class CheckSystem(APIView):
         for check in checks:
             check()
 
-        return JsonResponse(self.data)
+        return Response(self.data)
