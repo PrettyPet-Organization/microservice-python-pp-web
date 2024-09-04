@@ -1,7 +1,7 @@
 # Настройки для регистрации приложений Django и их конфигураций
 
 INSTALLED_APPS = [
-    "accounts.apps.AuthsConfig",
+    "accounts.apps.AuthConfig",
     "core.apps.CoreConfig",
     "profiles.apps.ProfilesConfig",
     "projects.apps.ProjectsConfig",
