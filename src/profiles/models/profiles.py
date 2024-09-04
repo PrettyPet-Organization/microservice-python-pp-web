@@ -1,8 +1,8 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from accounts.models.city import City
-from accounts.models.user import CustomUser
+from profiles.models.cities import City
+from accounts.models.custom_user import CustomUser
 from accounts.validators import validate_age, validate_image
 
 

@@ -1,1 +1,1 @@
-from accounts.models.user import CustomUser
+from accounts.models.custom_user import CustomUser
