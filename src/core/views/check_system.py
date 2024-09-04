@@ -3,8 +3,9 @@ import logging.config
 from functools import wraps
 
 from django.conf import settings
-from django.http import JsonResponse
 from django.utils.translation import gettext_lazy as _
+from rest_framework.request import Request
+from rest_framework.response import Response
 from rest_framework.views import APIView
 
 
@@ -25,12 +26,14 @@ class CheckSystem(APIView):
         """
 
         super().__init__(**kwargs)
-        self.DEFAULT_ERROR_MESSAGE = _("Check {item} failed.")
-        self.DEFAULT_SUCCESS_MESSAGE = _("Successfully configured!")
-        self.data = {}
+        self.DEFAULT_ERROR_MESSAGE: str = _("Check {item} failed.")
+        self.DEFAULT_SUCCESS_MESSAGE: str = _("Successfully configured!")
+        self.data: dict = {}
 
     @staticmethod
-    def _check_method(data_item_name: str, error_message=None, success_message=None):
+    def _check_method(
+        data_item_name: str, error_message: str = None, success_message: str = None
+    ):
         """
         Decorator for checking methods.
 
@@ -96,16 +99,17 @@ class CheckSystem(APIView):
         :raises Exception: To handle any other exceptions that may occur during setting up or using logging.
         """
 
-        logging_conf = settings.LOGGING
-        logging.config.dictConfig(logging_conf)
-        logger = logging.getLogger(__name__)
-
         try:
+            logging_conf = settings.LOGGING
+            logging.config.dictConfig(logging_conf)
+            logger = logging.getLogger(__name__)
+
             logger.debug("example DEBUG message")
             logger.info("example INFO message")
             logger.warning("example WARNING message")
             logger.error("example ERROR message")
             logger.critical("example CRITICAL message")
+
             return True
 
         except ImportError as e:
@@ -115,26 +119,24 @@ class CheckSystem(APIView):
         except Exception as e:
             print(_(f"An error occurred while setting up logging: {e}"))
 
-    def get(self, request) -> JsonResponse:
+    def get(self, request: Request) -> Response:
         """
         Performs all checks and returns their results as a JSON response.
 
-        :param request: The HTTP request object.
-        :type request: HttpRequest
+        :param request: The rest_framework Request object.
+        :type request: Request
 
-        :return: JsonResponse with the results of all checks.
-        :rtype: JsonResponse
+        :return: Response with the results of all checks.
+        :rtype: Response
         """
 
         # Finds all methods that are checks (decorated with _check_method)
         checks = [
             method
             for name, method in inspect.getmembers(self, predicate=inspect.ismethod)
-            if getattr(
-                method, "__is_check_method__", False
-            )  # Checks for the custom attribute
+            if getattr(method, "__is_check_method__", False)
         ]
         for check in checks:
             check()
 
-        return JsonResponse(self.data)
+        return Response(self.data)
