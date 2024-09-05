@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 
 from accounts.models.custom_user import CustomUser
 
@@ -90,7 +91,7 @@ class UserLoginTest(TestCase):
 
         # Checking if login failed
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Неправильно указали пароль или почту")
+        self.assertContains(response, _("Incorrect password or email"))
 
         # Checking that the user is not authenticated
         self.assertFalse(
