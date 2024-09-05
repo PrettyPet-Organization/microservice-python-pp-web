@@ -1,7 +1,9 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.test import TestCase
 from django.urls import reverse
 
-from accounts.models.user import CustomUser
+from accounts.models.custom_user import CustomUser
+from profiles.models.profiles import Profile
 
 
 class UserRegistrationTest(TestCase):
@@ -22,9 +24,15 @@ class UserRegistrationTest(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse("login"))
 
-        # Проверка, что пользователь был создан в базе данных
-        user_exists = CustomUser.objects.filter(username="testuser").exists()
-        self.assertTrue(user_exists)
+        # Проверка, что пользователь и профиль был создан в базе данных
+        try:
+            user = CustomUser.objects.get(username="testuser")
+            profile = Profile.objects.get(user=user)
+        except ObjectDoesNotExist:
+            self.fail("User or Profile does not exist")
+
+        self.assertIsNotNone(user)
+        self.assertIsNotNone(profile)
 
     def test_registration_with_mismatched_passwords(self):
         # Данные с несовпадающими паролями

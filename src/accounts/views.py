@@ -1,17 +1,16 @@
 import logging
 
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import HttpResponse, redirect, render
 from django.views import View
+from rest_framework import mixins, viewsets
 
+from accounts.forms import UserLoginForm, UserRegisterForm
+from accounts.models.custom_user import CustomUser
+from accounts.serializers.custom_user_sr import UserSerializer
 from profiles.models.profiles import Profile
-
 from settings.sessions import FAILED_LOGIN_ATTEMPTS_LIMIT
 
-from .forms import UserLoginForm, UserRegisterForm
-
-# Создание логгера
 logger = logging.getLogger(__name__)
 
 
@@ -20,7 +19,6 @@ def say_hi(request):
     return HttpResponse("<h1>Первые строчки проекта созданы</h1>")
 
 
-# Регистрация пользователя
 class UserRegisterView(View):
     template_name = "register.html"
 
@@ -78,7 +76,6 @@ class UserLoginView(View):
             >= FAILED_LOGIN_ATTEMPTS_LIMIT
         ):
             form.add_error(None, "Попробуйте зайти с помощью почты")
-            logger.error(f"Login attempts exceeded limit for email: {email}")
 
         return render(request, self.template_name, {"form": form})
 
@@ -104,7 +101,6 @@ class VerificationView(View):
 """
 
 
-class ProfileView(View, LoginRequiredMixin):
-    def get(self, request):
-        logger.info("Rendering ProfileView")
-        pass
+class UserViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    queryset = CustomUser.objects.all()
+    serializer_class = UserSerializer
