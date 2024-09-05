@@ -1,1 +1,1 @@
-# Конфигурации для отправки электронной почты, включая сервер SMTP, настройки отправителя и шаблоны писем
+# Configurations for sending email, including SMTP server, sender settings and email templates.

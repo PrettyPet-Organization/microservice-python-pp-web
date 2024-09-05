@@ -1,5 +1,4 @@
-# Настройки для управления сессиями, включая механизмы хранения и параметры безопасности.
+# Settings for session management, including storage mechanisms and security options.
 
-
-# Ограничение на запрос для логина
+# Request limit for login
 FAILED_LOGIN_ATTEMPTS_LIMIT = 3

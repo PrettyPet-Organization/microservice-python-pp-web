@@ -1,10 +1,10 @@
-# Settings for the logging system, including log levels, formatting and handlers
+# Settings for the logging system, including log levels, formatting and handlers.
 
 import logging
 import os
 from pathlib import Path
 
-from .common import BASE_DIR
+from settings.common import BASE_DIR
 
 LOGS_DIR = BASE_DIR.parent / "logs"
 

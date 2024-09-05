@@ -1,4 +1,4 @@
-# Настройки для шаблонов, включая пути к директориям шаблонов и параметры их рендеринга
+# Settings for templates, including template directory paths and rendering options.
 
 TEMPLATES = [
     {

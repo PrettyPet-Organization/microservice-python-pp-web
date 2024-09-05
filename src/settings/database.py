@@ -1,8 +1,8 @@
-# Конфигурации для подключения и настройки базы данных,
-# включая параметры подключения, использование пула соединений и настройки репликации.
+# Configurations for connecting and configuring the database,
+# including connection settings, connection pooling, and replication settings.
 
 
-from .common import BASE_DIR
+from settings.common import BASE_DIR
 
 DATABASES = {
     "default": {

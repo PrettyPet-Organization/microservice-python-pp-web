@@ -1,1 +1,1 @@
-# Настройки для интеграции и конфигурации Celery, включая брокеры сообщений и задачи
+# Settings for Celery integration and configuration, including message brokers and tasks.

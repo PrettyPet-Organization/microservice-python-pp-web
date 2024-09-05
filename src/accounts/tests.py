@@ -1,13 +1,14 @@
 from django.test import TestCase
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 
-from accounts.models.user import CustomUser
+from accounts.models.custom_user import CustomUser
 
 
 class UserRegistrationTest(TestCase):
 
     def test_user_registration(self):
-        # Данные для регистрации
+        # Registration details
         registration_data = {
             "username": "testuser",
             "email": "testuser@example.com",
@@ -15,19 +16,19 @@ class UserRegistrationTest(TestCase):
             "password2": "Strongpassword123",
         }
 
-        # Отправка POST-запроса на регистрацию
+        # Sending a POST request for registration
         response = self.client.post(reverse("register"), data=registration_data)
 
-        # Проверка, что регистрация прошла успешно и пользователя перенаправили на страницу входа
+        # Verifying that registration was successful and the user was redirected to the login page
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse("login"))
 
-        # Проверка, что пользователь был создан в базе данных
+        # Verifying that the user has been created in the database
         user_exists = CustomUser.objects.filter(username="testuser").exists()
         self.assertTrue(user_exists)
 
     def test_registration_with_mismatched_passwords(self):
-        # Данные с несовпадающими паролями
+        # Data with mismatched passwords
         registration_data = {
             "username": "testuser",
             "email": "testuser@example.com",
@@ -35,14 +36,14 @@ class UserRegistrationTest(TestCase):
             "password2": "weakpassword321",
         }
 
-        # Отправка POST-запроса на регистрацию
+        # Sending a POST request for registration
         response = self.client.post(reverse("register"), data=registration_data)
 
-        # Проверка, что регистрация не удалась
+        # Checking that registration failed
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Пароли не совпадают")
+        self.assertContains(response, _("Passwords don't match"))
 
-        # Проверка, что пользователь не был создан
+        # Checking that the user has not been created
         user_exists = CustomUser.objects.filter(username="testuser").exists()
         self.assertFalse(user_exists)
 
@@ -50,7 +51,7 @@ class UserRegistrationTest(TestCase):
 class UserLoginTest(TestCase):
 
     def setUp(self):
-        # Создаем тестового пользователя
+        # Create a test user
         self.user = CustomUser.objects.create_user(
             username="testuser",
             email="testuser@example.com",
@@ -58,20 +59,20 @@ class UserLoginTest(TestCase):
         )
 
     def test_user_login_successful(self):
-        # Данные для входа
+        # Login details
         login_data = {
             "email": "testuser@example.com",
             "password": "Strongpassword123",
         }
 
-        # Отправка POST-запроса на вход
+        # Sending a POST login request
         response = self.client.post(reverse("login"), data=login_data)
 
-        # Проверка, что вход прошел успешно и пользователя перенаправили на главную страницу
+        # Checking that the login was successful and the user was redirected to the main page
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse("say_hi"))
 
-        # Проверка, что пользователь аутентифицирован
+        # Verifying that the user is authenticated
         self.assertTrue(
             self.client.login(
                 email="testuser@example.com", password="Strongpassword123"
@@ -79,20 +80,20 @@ class UserLoginTest(TestCase):
         )
 
     def test_login_with_wrong_password(self):
-        # Данные с неправильным паролем
+        # Data with incorrect password
         login_data = {
             "email": "testuser@example.com",
             "password": "wrongpassword",
         }
 
-        # Отправка POST-запроса на вход
+        # Sending a POST login request
         response = self.client.post(reverse("login"), data=login_data)
 
-        # Проверка, что вход не удался
+        # Checking if login failed
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Неправильно указали пароль или почту")
+        self.assertContains(response, _("Incorrect password or email"))
 
-        # Проверка, что пользователь не аутентифицирован
+        # Checking that the user is not authenticated
         self.assertFalse(
             self.client.login(email="testuser@example.com", password="wrongpassword")
         )
