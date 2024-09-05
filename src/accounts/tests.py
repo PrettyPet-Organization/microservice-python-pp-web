@@ -41,7 +41,7 @@ class UserRegistrationTest(TestCase):
 
         # Checking that registration failed
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Passwords don't match")
+        self.assertContains(response, _("Passwords don't match"))
 
         # Checking that the user has not been created
         user_exists = CustomUser.objects.filter(username="testuser").exists()
