@@ -3,15 +3,14 @@ import logging
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import HttpResponse, redirect, render
+from django.utils.translation import gettext_lazy as _
 from django.views import View
 
+from accounts.forms import UserLoginForm, UserRegisterForm
 from profiles.models.profiles import Profile
+from settings import FAILED_LOGIN_ATTEMPTS_LIMIT
 
-from settings.sessions import FAILED_LOGIN_ATTEMPTS_LIMIT
-
-from .forms import UserLoginForm, UserRegisterForm
-
-# Создание логгера
+# Creating a logger
 logger = logging.getLogger(__name__)
 
 
@@ -20,7 +19,7 @@ def say_hi(request):
     return HttpResponse("<h1>Первые строчки проекта созданы</h1>")
 
 
-# Регистрация пользователя
+# User registration
 class UserRegisterView(View):
     template_name = "register.html"
 
@@ -66,7 +65,7 @@ class UserLoginView(View):
                 return redirect("say_hi")
             else:
                 request.session[self.failed_login_attempt_key] += 1
-                error_msg = "Неправильно указали пароль или почту"
+                error_msg = _("Incorrect password or email")
                 form.add_error(None, error_msg)
                 logger.warning(f"Failed login attempt for email: {email}")
         else:
@@ -77,7 +76,7 @@ class UserLoginView(View):
             request.session[self.failed_login_attempt_key]
             >= FAILED_LOGIN_ATTEMPTS_LIMIT
         ):
-            form.add_error(None, "Попробуйте зайти с помощью почты")
+            form.add_error(None, _("Try logging using email"))
             logger.error(f"Login attempts exceeded limit for email: {email}")
 
         return render(request, self.template_name, {"form": form})

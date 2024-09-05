@@ -1,4 +1,4 @@
-# Настройки для регистрации приложений Django и их конфигураций
+# Settings for registering Django applications and their configurations.
 
 INSTALLED_APPS = [
     "accounts.apps.AuthConfig",

@@ -1,4 +1,4 @@
-# Общие настройки, которые используются во всех средах (разработка, тестирование, продакшн)
+# General settings that are used in all environments (development, testing, production).
 
 import os
 from pathlib import Path
