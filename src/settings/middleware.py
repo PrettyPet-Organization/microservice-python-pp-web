@@ -1,4 +1,4 @@
-# Настройки для промежуточного ПО (middleware), включая пользовательские и встроенные компоненты
+# Settings for middleware, including custom and built-in components.
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

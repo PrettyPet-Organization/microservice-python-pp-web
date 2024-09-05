@@ -1,1 +1,1 @@
-# Всё, что связано с новостями тоже сюда
+# Everything related to the news is also here

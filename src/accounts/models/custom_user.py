@@ -9,9 +9,9 @@ from accounts.validators import validate_password, validate_phone_number
 
 
 class CustomUser(AbstractUser):
-    email = models.EmailField(_("Электронный адрес"), unique=True, max_length=255)
+    email = models.EmailField(_("Email"), unique=True, max_length=255)
     phone_number = models.CharField(
-        _("Номер телефона"),
+        _("Phone number"),
         unique=True,
         blank=True,
         null=True,
@@ -20,22 +20,20 @@ class CustomUser(AbstractUser):
         validators=[validate_phone_number],
     )
     password = models.CharField(
-        _("Пароль пользователя"), validators=[validate_password], max_length=255
+        _("User password"), validators=[validate_password], max_length=255
     )
-    code_word = models.CharField(
-        _("Кодовое слово для входа"), max_length=12, blank=True
-    )
+    code_word = models.CharField(_("Code word for entry"), max_length=12, blank=True)
 
     objects = CustomUserManager()
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
-    # Установка кодового слово
+    # Set the code word
     def set_code_word(self, code_word):
         self.code_word = sha256(code_word.encode()).hexdigest()
 
-    # Проверка на совпадение кодового слово
+    # Checking for a code word match
     def check_code_word(self, code_word):
         return self.code_word == sha256(code_word.encode()).hexdigest()
 

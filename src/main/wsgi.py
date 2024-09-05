@@ -20,4 +20,4 @@ logger = logging.getLogger(__name__)
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "main.settings")
 
 application = get_wsgi_application()
-logger.info("Проект на WSGI сервере запущен успешно")
+logger.info("The project on the WSGI server has been successfully launched")
