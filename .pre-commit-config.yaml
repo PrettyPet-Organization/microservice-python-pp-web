@@ -1,0 +1,23 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.2.0
+    hooks:
+    -   id: trailing-whitespace # Removes trailing whitespaces
+    -   id: end-of-file-fixer # Ensures that the end of file a blank string
+    -   id: check-yaml # Checks yaml syntax
+-   repo: https://github.com/pre-commit/pygrep-hooks
+    rev: v1.10.0
+    hooks:
+    -   id: python-check-blanket-noqa # Ensures that noqa has a specific code
+-   repo: https://github.com/psf/black-pre-commit-mirror
+    rev: 24.8.0
+    hooks:
+      - id: black # Runs black linter
+        language_version: python3.12
+-   repo: https://github.com/pycqa/isort
+    rev: 5.11.5
+    hooks:
+      - id: isort # Runs isort linter
+        name: isort (python)
