@@ -33,6 +33,7 @@ Unit-тесты находятся внутри папки каждого из �
 
 ### Настройка и запуск проекта
 
+
 Необходимо создать и активировать **виртуальное окружение**:
 ```
 python -m venv venv
@@ -133,6 +134,7 @@ https://dbdiagram.io/d/Pretty-Pet-66c894f4a346f9518ce84d0f <br>
 - Чертёж в виде DBML (Database Markup Language): <br>
 [database_structure.md](README_FILES%2FREADME_TEXT_FILES%2Fdatabase_structure.md)
 
+
 ## Команды make
 Для упрощения работы в приложении созданы **команды make**, перечисленные ниже. Для их использования необходимо установить пакет **make** при помощи команды ```sudo apt-get install make```. Если у вас **windows**, вам необходимо установить **cmake** или работать через **wsl**.
 - ```make freeze``` - перезаписывает файл requirements.txt текущими зависимостями;
@@ -142,3 +144,10 @@ https://dbdiagram.io/d/Pretty-Pet-66c894f4a346f9518ce84d0f <br>
 <p align="center">
   <img width="300" height="300" src="https://media.tenor.com/67iB7B7g59YAAAAM/siu-ronaldo-siu.gif">
 </p>
+
+## <p align="center" >Всем добра!</p>
+<p align="center">
+  <img width="300" height="300" src="https://media.tenor.com/67iB7B7g59YAAAAM/siu-ronaldo-siu.gif">
+</p>
+
+
