@@ -7,6 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views import View
 
 from accounts.forms import UserLoginForm, UserRegisterForm
+from common.utils import create_and_send_email
 from profiles.models.profiles import Profile
 from settings import FAILED_LOGIN_ATTEMPTS_LIMIT
 
@@ -32,7 +33,14 @@ class UserRegisterView(View):
         form = UserRegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
-            Profile.objects.create(user=user)
+            profile = Profile.objects.create(user=user)
+            logger.info(f"User registered successfully: {user.username}")
+            create_and_send_email(
+                send_to=profile.user.email,
+                template_name="emails/registration_success.html",
+                context={"name": profile.user.username},
+                subject="Успешная регистрация",
+            )
             logger.info(f"User registered successfully: {user.username}")
             return redirect("login")
         else:
