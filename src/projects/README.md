@@ -49,3 +49,9 @@
 3. cover_letter: TextField
 4. resume_url: URLField
 5. status: CharField
+
+
+# Для запуска скрипта:
+```bash
+python manage.py create_instance_projects
+```
