@@ -1,56 +1,90 @@
 from django.test import TestCase
 from django.urls import reverse
+from rest_framework.test import APIClient
+from rest_framework import status
+from django.utils.translation import gettext as _
 
-from accounts.models.user import CustomUser
+
+from accounts.models.custom_user import CustomUser
+from accounts import messages
 
 
 class UserRegistrationTest(TestCase):
 
-    def test_user_registration(self):
-        # Данные для регистрации
-        registration_data = {
-            "username": "testuser",
-            "email": "testuser@example.com",
-            "password1": "Strongpassword123",
-            "password2": "Strongpassword123",
+    def setUp(self):
+        self.client = APIClient()
+        self.url = reverse('register')
+        self.valid_data = {
+            'username': 'testuser',
+            'email': 'testuser@example.com',
+            'password1': 'Testpassword123',
+            'password2': 'Testpassword123',
+            'code_word': 'secret'
         }
+        self.invalid_data_password_mismatch = {
+            'username': 'testuser',
+            'email': 'testuser@example.com',
+            'password1': 'Testpassword123',
+            'password2': 'DifferentPassword',
+            'code_word': 'secret'
+        }
+        self.invalid_data_not_unique_email = {
+            'username': 'testuser',
+            'email': 'testuser@example.com',
+            'password1': 'Testpassword123',
+            'password2': 'Testpassword123',
+        }
+        # Create user for testing not unique email
+        CustomUser.objects.create_user(
+            username='existinguser',
+            email='existinguser@example.com',
+            password='Testpassword123'
+        )
 
-        # Отправка POST-запроса на регистрацию
-        response = self.client.post(reverse("register"), data=registration_data)
-
-        # Проверка, что регистрация прошла успешно и пользователя перенаправили на страницу входа
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse("login"))
-
-        # Проверка, что пользователь был создан в базе данных
-        user_exists = CustomUser.objects.filter(username="testuser").exists()
-        self.assertTrue(user_exists)
+    def test_user_registration(self):
+        """Test success registration user"""
+        response = self.client.post(self.url, self.valid_data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertTrue(CustomUser.objects.filter(email=self.valid_data['email']).exists())
 
     def test_registration_with_mismatched_passwords(self):
-        # Данные с несовпадающими паролями
-        registration_data = {
-            "username": "testuser",
-            "email": "testuser@example.com",
-            "password1": "Strongpassword123",
-            "password2": "weakpassword321",
-        }
+        """Test registration with mismatched passwords"""
+        response = self.client.post(self.url, self.invalid_data_password_mismatch, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn(_(messages.PASSWORDS_DONT_MATCH_ERROR_MESSAGE), response.data['non_field_errors'][0])
 
-        # Отправка POST-запроса на регистрацию
-        response = self.client.post(reverse("register"), data=registration_data)
+    def test_registration_with_not_unique_email(self):
+        """Test registration with not unique email"""
+        response = self.client.post(self.url, {
+            'username': 'newuser',
+            'email': 'existinguser@example.com',
+            'password1': 'Testpassword123',
+            'password2': 'Testpassword123',
+        }, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn(_(messages.NOT_UNIQUE_EMAIL_ERROR_MESSAGE), response.data['email'])
 
-        # Проверка, что регистрация не удалась
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Пароли не совпадают")
+    def test_registration_with_code_word(self):
+        """Test registration with code word"""
+        response = self.client.post(self.url, self.valid_data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        user = CustomUser.objects.get(email=self.valid_data['email'])
+        self.assertEqual(user.code_word, self.valid_data['code_word'])
 
-        # Проверка, что пользователь не был создан
-        user_exists = CustomUser.objects.filter(username="testuser").exists()
-        self.assertFalse(user_exists)
+    def test_registration_without_code_word(self):
+        """Test registration without code word"""
+        data_without_code_word = self.valid_data.copy()
+        data_without_code_word.pop('code_word')
+        response = self.client.post(self.url, data_without_code_word, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        user = CustomUser.objects.get(email=self.valid_data['email'])
+        self.assertEqual(user.code_word, "")
 
 
 class UserLoginTest(TestCase):
 
     def setUp(self):
-        # Создаем тестового пользователя
+        # Create a test user
         self.user = CustomUser.objects.create_user(
             username="testuser",
             email="testuser@example.com",
@@ -58,20 +92,20 @@ class UserLoginTest(TestCase):
         )
 
     def test_user_login_successful(self):
-        # Данные для входа
+        # Login details
         login_data = {
             "email": "testuser@example.com",
             "password": "Strongpassword123",
         }
 
-        # Отправка POST-запроса на вход
+        # Sending a POST login request
         response = self.client.post(reverse("login"), data=login_data)
 
-        # Проверка, что вход прошел успешно и пользователя перенаправили на главную страницу
+        # Checking that the login was successful and the user was redirected to the main page
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse("say_hi"))
 
-        # Проверка, что пользователь аутентифицирован
+        # Verifying that the user is authenticated
         self.assertTrue(
             self.client.login(
                 email="testuser@example.com", password="Strongpassword123"
@@ -79,20 +113,20 @@ class UserLoginTest(TestCase):
         )
 
     def test_login_with_wrong_password(self):
-        # Данные с неправильным паролем
+        # Data with incorrect password
         login_data = {
             "email": "testuser@example.com",
             "password": "wrongpassword",
         }
 
-        # Отправка POST-запроса на вход
+        # Sending a POST login request
         response = self.client.post(reverse("login"), data=login_data)
 
-        # Проверка, что вход не удался
+        # Checking if login failed
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Неправильно указали пароль или почту")
+        self.assertContains(response, _("Incorrect password or email"))
 
-        # Проверка, что пользователь не аутентифицирован
+        # Checking that the user is not authenticated
         self.assertFalse(
             self.client.login(email="testuser@example.com", password="wrongpassword")
         )

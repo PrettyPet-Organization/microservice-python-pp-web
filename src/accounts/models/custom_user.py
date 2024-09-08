@@ -25,6 +25,8 @@ class CustomUser(AbstractUser):
     code_word = models.CharField(
         _("Кодовое слово для входа"), max_length=12, blank=True
     )
+    first_name = None
+    last_name = None
 
     objects = CustomUserManager()
 
