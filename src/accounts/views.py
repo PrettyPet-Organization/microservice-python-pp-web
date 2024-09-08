@@ -1,26 +1,20 @@
 import logging
 
-
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import HttpResponse, redirect, render
 from django.utils.translation import gettext_lazy as _
 from django.views import View
-from django.contrib.auth import authenticate, login
-from rest_framework.response import Response
+from drf_spectacular.utils import extend_schema
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from drf_spectacular.utils import extend_schema
 
-
-from settings.sessions import FAILED_LOGIN_ATTEMPTS_LIMIT
-from profiles.models.profiles import Profile
+from accounts import messages
 from accounts.forms import UserLoginForm
 from accounts.serializers import UserRegisterSerializer
-from accounts import messages
-
-
+from profiles.models.profiles import Profile
+from settings.sessions import FAILED_LOGIN_ATTEMPTS_LIMIT
 
 logger = logging.getLogger(__name__)
 
@@ -35,23 +29,24 @@ class UserRegisterView(APIView):
     Handles user registration.
 
     Inherits from `APIView` and manages user creation by handling POST requests
-    with user registration data. Upon successful registration, a 201 (Created) 
-    status is returned. If the request contains invalid data, a 400 (Bad Request) 
+    with user registration data. Upon successful registration, a 201 (Created)
+    status is returned. If the request contains invalid data, a 400 (Bad Request)
     status is returned with validation errors.
 
     Methods:
         post(request):
-            Handles user registration by validating the input data with 
+            Handles user registration by validating the input data with
             `UserRegisterSerializer`. Returns HTTP 201 if successful or
             HTTP 400 in case of validation failure.
     """
+
     @extend_schema(
-        description='Endpoint to register a new user. Accepts user registration data in the request body.',
+        description="Endpoint to register a new user. Accepts user registration data in the request body.",
         request=UserRegisterSerializer,
         responses={
-            201: messages.USER_SUCCESSFULLY_REGISTERED_MESSAGE, 
-            400: messages.VALIDATION_ERROR_MESSAGE
-            },
+            201: messages.USER_SUCCESSFULLY_REGISTERED_MESSAGE,
+            400: messages.VALIDATION_ERROR_MESSAGE,
+        },
     )
     def post(self, request):
         """
@@ -61,18 +56,18 @@ class UserRegisterView(APIView):
             request (Request): The HTTP request object containing user registration data.
 
         Returns:
-            Response: 
+            Response:
                 - HTTP 201 (Created) if the user is successfully registered.
                 - HTTP 400 (Bad Request) if the input data fails validation.
         """
-        logger.info('Received registration request: %s', request.data)
+        logger.info("Received registration request: %s", request.data)
         serializer = UserRegisterSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             logger.info(messages.USER_SUCCESSFULLY_REGISTERED_MESSAGE)
             return Response(status=status.HTTP_201_CREATED)
-        
-        logger.warning('User registration failed: %s', serializer.errors)
+
+        logger.warning("User registration failed: %s", serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
