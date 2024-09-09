@@ -55,8 +55,9 @@ class UserRegistrationTest(TestCase):
             self.url, self.invalid_data_password_mismatch, format="json"
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        
         self.assertIn(
-            _(messages.PASSWORDS_DONT_MATCH_ERROR_MESSAGE),
+            str(messages.PASSWORDS_DONT_MATCH_ERROR_MESSAGE),
             response.data["non_field_errors"][0],
         )
 
