@@ -1,3 +1,3 @@
-# Конфигурации для статических файлов, включая пути к директориям и настройки сборки
+# Configurations for static files, including directory paths and build settings.
 
 STATIC_URL = "static/"

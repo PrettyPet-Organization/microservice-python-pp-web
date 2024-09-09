@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from PIL import Image
 
 
-# Проверка на последовательности символов на одной строке клавиатуры
+# Checking for a sequence of characters on one keyboard line
 def in_keyboard(sub: str) -> bool:
     keyboard_rows = ["qwertyuiop", "asdfghjkl", "zxcvbnm"]
 
@@ -15,41 +15,41 @@ def in_keyboard(sub: str) -> bool:
     return False
 
 
-# Валидация пароля
+# Password validation
 def validate_password(value):
-    # Проверка длины
+    # Length check
     if len(value) < 8:
-        raise ValidationError(_("Пароль должен быть не менее 8 символов."))
+        raise ValidationError(_("The password must be at least 8 characters."))
 
-    # Проверка на содержание только букв и чисел
+    # Checks for letters and numbers only
     if not re.match("^[A-Za-z0-9]*$", value):
-        raise ValidationError(_("Пароль может содержать только буквы и цифры."))
+        raise ValidationError(_("The password can only contain letters and numbers."))
 
-    # Проверка наличия хотя бы одной заглавной буквы
+    # Checking for at least one capital letter
     if not re.search("[A-Z]", value):
         raise ValidationError(
-            _("Пароль должен содержать хотя бы одну заглавную букву.")
+            _("The password must contain at least one capital letter.")
         )
 
-    # Подстроки по 4 символов
+    # Substrings of 4 characters
     substrings = [value[i : i + 4] for i in range(len(value) - 3)]
 
-    # Проверка находится ли не правильная последовательность
+    # Checking whether the correct sequence is found
     if any(in_keyboard(sub.lower()) for sub in substrings):
-        raise ValidationError("Invalid substring found.")
+        raise ValidationError(_("Invalid substring found."))
 
 
-# Валидация возраста
+# Age validation
 def validate_age(value: int):
     if value < 0:
-        raise ValidationError(_("Возраст не может быть отрицательным."))
+        raise ValidationError(_("Age cannot be negative."))
 
 
-# Валидация города
+# City validation
 def validate_city(value: str):
-    # Проверка на то не пуста ли значение и содержит ли заглавную букву
+    # Checking whether the value is empty and contains a capital letter
     if value and not value[0].isupper():
-        raise ValidationError(_("Первая буква должна быть заглавной."))
+        raise ValidationError(_("The first letter must be capitalized."))
 
 
 def validate_phone_number(phone_number: str):
@@ -125,29 +125,27 @@ def validate_phone_number(phone_number: str):
     for prefixes, regex in phone_regex_dict.items():
         for prefix in prefixes:
             if phone_number.startswith(prefix):
-                # Убираем префикс из номера для последующей проверки
+                # Remove prefix from number for later verification
                 local_number = phone_number[len(prefix) :]
                 match = re.fullmatch(pattern=regex, string=local_number)
                 if not match:
                     raise ValidationError(
-                        f"Неверный формат номера для префикса {prefix}."
+                        _(f"Invalid number format for prefix {prefix}.")
                     )
                 return
 
-    # Если ни один префикс не совпал
-    raise ValidationError("Некорректный префикс номера.")
+    # If no prefix matches
+    raise ValidationError(_("Incorrect number prefix."))
 
 
 def validate_image(image):
-    # Проверка размера файла
+    # Checking file size
     filesize = image.file.size
     if filesize > 4 * 1024 * 1024:  # 4 MB
-        raise ValidationError(_("Размер файла не должен превышать 4MB."))
+        raise ValidationError(_("The file size must not exceed 4MB."))
 
-    # Проверка разрешения изображения
+    # Checking image resolution
     img = Image.open(image)
     width, height = img.size
     if width > 200 or height > 200:
-        raise ValidationError(
-            _("Разрешение изображения не должно превышать 200x200 пикселей.")
-        )
+        raise ValidationError(_("Image resolution should not exceed 200x200 pixels."))

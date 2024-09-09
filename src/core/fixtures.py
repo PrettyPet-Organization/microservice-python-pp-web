@@ -1,4 +1,5 @@
-# Здесь находятся функции, создающие тестовые экземпляры модели определенных приложений
+# Here are functions that create test instances of specific application models
+
 
 
 def create_instance_common():

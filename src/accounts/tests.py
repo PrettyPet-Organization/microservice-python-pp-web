@@ -1,10 +1,9 @@
 from django.test import TestCase
 from django.urls import reverse
-from django.utils.translation import gettext as _
 from rest_framework import status
 from rest_framework.test import APIClient
-
 from accounts import messages
+from django.utils.translation import gettext_lazy as _
 from accounts.models.custom_user import CustomUser
 
 
@@ -20,6 +19,7 @@ class UserRegistrationTest(TestCase):
             "password2": "Testpassword123",
             "code_word": "secret",
         }
+
         self.invalid_data_password_mismatch = {
             "username": "testuser",
             "email": "testuser@example.com",
@@ -39,6 +39,7 @@ class UserRegistrationTest(TestCase):
             email="existinguser@example.com",
             password="Testpassword123",
         )
+
 
     def test_user_registration(self):
         """Test success registration user"""
@@ -91,6 +92,7 @@ class UserRegistrationTest(TestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         user = CustomUser.objects.get(email=self.valid_data["email"])
         self.assertEqual(user.code_word, "")
+
 
 
 class UserLoginTest(TestCase):

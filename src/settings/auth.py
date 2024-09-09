@@ -1,4 +1,4 @@
-# Конфигурации для системы аутентификации и авторизации
+# Configurations for the authentication and authorization system.
 
 AUTH_PASSWORD_VALIDATORS = [
     {

@@ -1,4 +1,4 @@
-# Конфигурации для интернационализации и локализации, включая языковые файлы и настройки перевода
+# Configurations for internationalization and localization, including language files and translation settings.
 
 LANGUAGE_CODE = "en-us"
 
