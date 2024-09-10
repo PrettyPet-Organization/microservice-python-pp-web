@@ -6,7 +6,6 @@ from django.shortcuts import HttpResponse, redirect, render
 from django.utils.translation import gettext_lazy as _
 from django.views import View
 
-
 from drf_spectacular.utils import extend_schema
 from rest_framework import status
 from rest_framework.response import Response
@@ -14,13 +13,8 @@ from rest_framework.views import APIView
 
 from accounts import messages
 from accounts.serializers import UserRegisterSerializer
-from profiles.models.profiles import Profile
-from settings.sessions import FAILED_LOGIN_ATTEMPTS_LIMIT
-
-
-
+from profiles.models import Profile
 from accounts.forms import UserLoginForm, UserRegisterForm
-from profiles.models.profiles import Profile
 from settings import FAILED_LOGIN_ATTEMPTS_LIMIT
 
 # Creating a logger
@@ -60,10 +54,6 @@ class UserRegisterView(APIView):
     def post(self, request):
         """
         Processes a POST request to register a new user.
-
-# User registration
-class UserRegisterView(View):
-    template_name = "register.html"
 
         Args:
             request (Request): The HTTP request object containing user registration data.
