@@ -4,6 +4,9 @@ from django.db import models
 class Tool(models.Model):
     tool_name = models.CharField(max_length=100)
 
+    def __str__(self):
+        return f"Tool №{self.pk} - {self.tool_name}"
+
 
 class ToolsInProject(models.Model):
     tool = models.ForeignKey(to="Tool", on_delete=models.SET_NULL, null=True)

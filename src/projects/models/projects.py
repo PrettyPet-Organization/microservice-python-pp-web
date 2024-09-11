@@ -26,3 +26,6 @@ class Project(models.Model):
     )
     tags = models.ManyToManyField(to="Tag", related_name="projects")
     groups = models.ManyToManyField(to="Group", related_name="projects")
+
+    def __str__(self):
+        return f"Project №{self.pk} - {self.project_name}"

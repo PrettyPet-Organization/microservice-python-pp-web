@@ -16,3 +16,6 @@ class ProjectParticipationRequest(models.Model):
     status = models.CharField(
         max_length=12, choices=RequestStatus.choices, default=RequestStatus.PENDING
     )
+
+    def __str__(self):
+        return f"Request №{self.pk} from {self.profile.user.username} for project №{self.project.pk} - {self.project}"
