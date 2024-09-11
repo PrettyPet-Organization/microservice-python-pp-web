@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 from profiles.models.profiles import Profile
 
@@ -9,12 +10,12 @@ class ProjectParticipationRequest(models.Model):
         ACCEPTED = "accepted", "Accepted"
         DECLINED = "declined", "Declined"
 
-    project = models.ForeignKey(to="Project", on_delete=models.CASCADE)
-    profile = models.ForeignKey(to=Profile, on_delete=models.CASCADE)
-    cover_letter = models.TextField()
-    resume_url = models.URLField(blank=True, null=True)
+    project = models.ForeignKey(_("Requested project"), to="Project", on_delete=models.CASCADE)
+    profile = models.ForeignKey(_("Participant profile"),to=Profile, on_delete=models.CASCADE)
+    cover_letter = models.TextField(_("Cover letter"))
+    resume_url = models.URLField(_("Resume url"),blank=True, null=True)
     status = models.CharField(
-        max_length=12, choices=RequestStatus.choices, default=RequestStatus.PENDING
+        _("Status the request"),max_length=12, choices=RequestStatus.choices, default=RequestStatus.PENDING
     )
 
     def __str__(self):
