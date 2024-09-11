@@ -15,5 +15,6 @@ class ProjectViewSet(GenericViewSet, mixins.ListModelMixin):
     - `queryset`: A queryset for retrieving project instances.
     - `serializer_class`: The serializer class used for validating and serializing data.
     """
+
     queryset = Project.objects.all()
     serializer_class = ProjectsSerializer

@@ -10,23 +10,40 @@ class Project(models.Model):
         FINISHED = "FN", _("Finished")
 
     project_type = models.ForeignKey(
-        _("Type for project"), to="ProjectType", on_delete=models.SET_NULL, null=True, related_name="projects",
+        _("Type for project"),
+        to="ProjectType",
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="projects",
     )
     project_name = models.CharField(_("Project name"), max_length=100)
     core_idea = models.CharField(_("Core idea"), max_length=255)
     description = models.TextField(_("Description"))
     finish_date = models.DateField(_("End time for project"), null=True, blank=True)
     status = models.CharField(
-        _("Actual status"), max_length=2, choices=ProjectStatus.choices, default=ProjectStatus.NOT_STARTED
+        _("Actual status"),
+        max_length=2,
+        choices=ProjectStatus.choices,
+        default=ProjectStatus.NOT_STARTED,
     )
     tools = models.ManyToManyField(
-        _("Tools for project"), to="Tool", through="ToolsInProject", related_name="projects"
+        _("Tools for project"),
+        to="Tool",
+        through="ToolsInProject",
+        related_name="projects",
     )
     roles = models.ManyToManyField(
-        _("Role for project"), to="Role", through="RolesInProject", related_name="projects"
+        _("Role for project"),
+        to="Role",
+        through="RolesInProject",
+        related_name="projects",
     )
-    tags = models.ManyToManyField(_("Tags for project"), to="Tag", related_name="projects")
-    groups = models.ManyToManyField(_("Groups for project"), to="Group", related_name="projects")
+    tags = models.ManyToManyField(
+        _("Tags for project"), to="Tag", related_name="projects"
+    )
+    groups = models.ManyToManyField(
+        _("Groups for project"), to="Group", related_name="projects"
+    )
 
     @property
     def is_finished(self):
