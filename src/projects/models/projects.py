@@ -1,12 +1,13 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class Project(models.Model):
     class ProjectStatus(models.TextChoices):
-        NOT_STARTED = "not_started", "Not Started"
-        IN_PROCESS = "in_process", "In Process"
-        NOT_FINISHED = "not_finished", "Not Finished"
-        FINISHED = "finished", "Finished"
+        NOT_STARTED = "NS", _("Not Started")
+        IN_PROCESS = "IP", _("In Process")
+        NOT_FINISHED = "NF", _("Not Finished")
+        FINISHED = "FN", _("Finished")
 
     project_type = models.ForeignKey(
         to="ProjectType", on_delete=models.SET_NULL, null=True, related_name="projects"
@@ -16,7 +17,7 @@ class Project(models.Model):
     description = models.TextField()
     finish_date = models.DateField(null=True, blank=True)
     status = models.CharField(
-        max_length=12, choices=ProjectStatus.choices, default=ProjectStatus.NOT_STARTED
+        max_length=2, choices=ProjectStatus.choices, default=ProjectStatus.NOT_STARTED
     )
     tools = models.ManyToManyField(
         to="Tool", through="ToolsInProject", related_name="projects"
@@ -26,6 +27,10 @@ class Project(models.Model):
     )
     tags = models.ManyToManyField(to="Tag", related_name="projects")
     groups = models.ManyToManyField(to="Group", related_name="projects")
+
+    @property
+    def is_finished(self):
+        return self.status == self.ProjectStatus.FINISHED
 
     def __str__(self):
         return f"Project №{self.pk} - {self.project_name}"

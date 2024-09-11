@@ -4,4 +4,5 @@ from projects import views
 
 router = DefaultRouter()
 router.register(r"all", views.ProjectViewSet)
+
 urlpatterns = router.urls

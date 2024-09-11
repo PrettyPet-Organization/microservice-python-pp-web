@@ -9,8 +9,8 @@ class ProjectParticipationRequest(models.Model):
         ACCEPTED = "accepted", "Accepted"
         DECLINED = "declined", "Declined"
 
-    profile = models.ForeignKey(to=Profile, on_delete=models.CASCADE)
     project = models.ForeignKey(to="Project", on_delete=models.CASCADE)
+    profile = models.ForeignKey(to=Profile, on_delete=models.CASCADE)
     cover_letter = models.TextField()
     resume_url = models.URLField(blank=True, null=True)
     status = models.CharField(

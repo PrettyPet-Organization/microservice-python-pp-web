@@ -3,9 +3,9 @@
 from projects.models.groups_for_projects import Group
 from projects.models.project_types import ProjectType
 from projects.models.projects import Project
-from projects.models.roles_in_project import Role
+from projects.models.roles_in_project import Role, RolesInProject
 from projects.models.tags_in_project import Tag
-from projects.models.tools_in_project import Tool
+from projects.models.tools_in_project import Tool, ToolsInProject
 
 
 def create_instance_common():
@@ -21,19 +21,25 @@ def create_instance_profiles():
 
 
 def create_instance_projects():
+    # Создание типов проектов
     type1 = ProjectType.objects.create(type_name="Backend")
 
+    # Создание ролей
     role1 = Role.objects.create(role_name="Developer")
     role2 = Role.objects.create(role_name="Designer")
 
+    # Создание групп
     group1 = Group.objects.create(group_name="Group A")
 
+    # Создание инструментов
     tool1 = Tool.objects.create(tool_name="Git")
     tool2 = Tool.objects.create(tool_name="Docker")
 
+    # Создание тегов
     tag1 = Tag.objects.create(tag_name="Python")
     tag2 = Tag.objects.create(tag_name="Django")
 
+    # Создание проекта
     project1 = Project.objects.create(
         project_type=type1,
         project_name="Project 1",
@@ -43,8 +49,12 @@ def create_instance_projects():
         status=Project.ProjectStatus.NOT_STARTED,
     )
 
+    # Добавление информации о количестве участников для каждой роли и инструмента
+    RolesInProject.objects.create(role=role1, project=project1, participants_needed=4)
+    RolesInProject.objects.create(role=role2, project=project1, participants_needed=5)
+    ToolsInProject.objects.create(tool=tool1, project=project1, participants_needed=6)
+    ToolsInProject.objects.create(tool=tool2, project=project1, participants_needed=7)
+
     # Добавление связей ManyToMany
-    project1.roles.set([role1, role2])
-    project1.tools.set([tool1, tool2])
     project1.tags.set([tag1, tag2])
     project1.groups.set([group1])

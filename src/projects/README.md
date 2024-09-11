@@ -53,5 +53,33 @@
 
 # Для запуска скрипта:
 ```bash
+python manage.py makemigrations
+python manage.py migrate
 python manage.py create_instance_projects
 ```
+
+# Также для всех моделей созданы сериализаторы
+## Пример на проекте
+
+    class ProjectsSerializer(ModelSerializer):
+        roles = RolesInProjectSerializer(many=True, source="rolesinproject_set")
+        tools = ToolsInProjectSerializer(many=True, source="toolsinproject_set")
+        tags = TagsSerializer(many=True)
+        groups = GroupSerializer(many=True)
+    
+        class Meta:
+            model = Project
+            fields = [
+                "project_type",
+                "project_name",
+                "core_idea",
+                "description",
+                "finish_date",
+                "status",
+                "tools",
+                "roles",
+                "tags",
+                "groups",
+        ]
+
+P.S декоратор **@property** использован для функции is_finished модели проекта
