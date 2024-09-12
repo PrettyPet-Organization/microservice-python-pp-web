@@ -1,7 +1,6 @@
 # Here are functions that create test instances of specific application models
 
 
-
 def create_instance_common():
     pass
 

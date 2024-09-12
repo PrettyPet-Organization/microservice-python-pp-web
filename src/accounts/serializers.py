@@ -1,5 +1,6 @@
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from accounts import messages
 from accounts.models.custom_user import CustomUser
@@ -63,22 +64,10 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         return user
 
 
-# class UserLoginSerializer(serializers.Serializer):
-#     email = serializers.EmailField(
-#         label=_("Почта"),
-#         error_messages={
-#             "invalid": _("Некорректный формат электронной почты"),
-#             "required": _("Введите адрес электронной почты"),
-#         },
-#     )
-#     password = serializers.CharField(
-#         write_only=True,
-#         label=_("Пароль"),
-#         style={"input_type": "password"}
-#     )
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+        # Can add custom claim
 
-
-# class ProfileSerializer(serializers.ModelSerializer):
-# 	class Meta:
-# 		model = Profile
-# 		fields = ["age", "city", "description", "photo_url"]
+        return token
