@@ -1,3 +1,48 @@
 from django.shortcuts import render
 
 # Create your views here.
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from pytz import timezone
+from datetime import datetime
+from random import choice
+
+class RandomTimeView(APIView):
+    ''' This function returns the dict {'country': contry, 'time': %H:%M:%S }
+    using the library pytz and datatime
+    the country_and_tz dictionary currently contains 24 entries'''
+    def get(self, request):
+        country_and_tz =  {
+            "Россия": "Europe/Moscow",
+            "США": "America/New_York",
+            "Канада": "America/Toronto",
+            "Бразилия": "America/Sao_Paulo",
+            "Австралия": "Australia/Sydney",
+            "Китай": "Asia/Shanghai",
+            "Индия": "Asia/Kolkata",
+            "Япония": "Asia/Tokyo",
+            "Германия": "Europe/Berlin",
+            "Франция": "Europe/Paris",
+            "Италия": "Europe/Rome",
+            "Испания": "Europe/Madrid",
+            "Великобритания": "Europe/London",
+            "Мексика": "America/Mexico_City",
+            "Южная Корея": "Asia/Seoul",
+            "Новая Зеландия": "Pacific/Auckland",
+            "Аргентина": "America/Argentina/Buenos_Aires",
+            "Норвегия": "Europe/Oslo",
+            "Швеция": "Europe/Stockholm",
+            "Дания": "Europe/Copenhagen",
+            "Польша": "Europe/Warsaw",
+            "Турция": "Europe/Istanbul",
+            "Нидерланды": "Europe/Amsterdam",
+            "Индонезия": "Asia/Jakarta",
+            "Филиппины": "Asia/Manila"
+        }
+
+        country = choice(list(country_and_tz))
+        tz_name = timezone(country_and_tz[country])
+        current_time = datetime.now(tz_name)
+
+        return Response({'country': country, 'time': current_time.strftime("%H:%M:%S")})
+
