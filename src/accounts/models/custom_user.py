@@ -22,6 +22,8 @@ class CustomUser(AbstractUser):
     password = models.CharField(
         _("User password"), validators=[validate_password], max_length=255
     )
+    first_name = None
+    last_name = None
     code_word = models.CharField(_("Code word for entry"), max_length=12, blank=True)
 
     objects = CustomUserManager()
