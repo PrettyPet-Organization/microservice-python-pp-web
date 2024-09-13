@@ -7,8 +7,13 @@ from email.mime.text import MIMEText
 
 from django.template.loader import render_to_string
 
-from settings import (EMAIL_ADDRESS, EMAIL_PASSWORD, EMAIL_TIMEOUT, SMTP_PORT,
-                      SMTP_SERVER)
+from settings import (
+    EMAIL_ADDRESS,
+    EMAIL_PASSWORD,
+    EMAIL_TIMEOUT,
+    SMTP_PORT,
+    SMTP_SERVER,
+)
 
 logger = logging.getLogger(__name__)
 
