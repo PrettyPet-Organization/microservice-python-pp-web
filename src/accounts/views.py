@@ -37,8 +37,6 @@ class UserRegisterView(APIView):
 
     permission_classes = (permissions.AllowAny,)
     serializer_class = UserRegisterSerializer
-
-    def post(self, request):
         """
         Processes a POST request to register a new user.
 
