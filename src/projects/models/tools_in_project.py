@@ -1,15 +1,16 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-
-class Tool(models.Model):
-    tool_name = models.CharField(_("Tool name"), max_length=100)
-
-    def __str__(self):
-        return f"Tool №{self.pk} - {self.tool_name}"
+from common.models.tools import Tool
 
 
 class ToolsInProject(models.Model):
-    tool = models.ForeignKey(to="Tool", on_delete=models.SET_NULL, null=True)
-    project = models.ForeignKey(to="Project", on_delete=models.CASCADE)
-    participants_needed = models.PositiveIntegerField(null=True, blank=True)
+    tool = models.ForeignKey(
+        to=Tool, on_delete=models.SET_NULL, null=True, verbose_name=_("Tool")
+    )
+    project = models.ForeignKey(
+        to="Project", on_delete=models.CASCADE, verbose_name=_("Project")
+    )
+    participants_needed = models.PositiveIntegerField(
+        null=True, blank=True, verbose_name=_("Participants needed")
+    )

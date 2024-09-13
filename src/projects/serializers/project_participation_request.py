@@ -6,4 +6,4 @@ from projects.models.project_participation_request import ProjectParticipationRe
 class ParticipationRequestSerializer(ModelSerializer):
     class Meta:
         model = ProjectParticipationRequest
-        fields = ["project", "profile", "cover_letter", "resume_url", "status"]
+        fields = "__all__"

@@ -1,14 +1,13 @@
 from rest_framework.serializers import ModelSerializer
 
-from projects.models.roles_in_project import Role, RolesInProject
+from common.models.roles import Role
+from projects.models.roles_in_project import RolesInProject
 
 
 class RoleSerializer(ModelSerializer):
     class Meta:
         model = Role
-        fields = [
-            "role_name",
-        ]
+        fields = "__all__"
 
 
 class RolesInProjectSerializer(ModelSerializer):
@@ -16,8 +15,4 @@ class RolesInProjectSerializer(ModelSerializer):
 
     class Meta:
         model = RolesInProject
-        fields = [
-            "role",
-            "project",
-            "participants_needed",
-        ]
+        fields = "__all__"

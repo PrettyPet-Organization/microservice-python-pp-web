@@ -11,13 +11,13 @@ class ProjectParticipationRequest(models.Model):
         DECLINED = "declined", "Declined"
 
     project = models.ForeignKey(
-        _("Requested project"), to="Project", on_delete=models.CASCADE
+        to="Project", on_delete=models.CASCADE, verbose_name=_("Requested project")
     )
     profile = models.ForeignKey(
-        _("Participant profile"), to=Profile, on_delete=models.CASCADE
+        to=Profile, on_delete=models.CASCADE, verbose_name=_("Participant profile")
     )
-    cover_letter = models.TextField(_("Cover letter"))
-    resume_url = models.URLField(_("Resume url"), blank=True, null=True)
+    cover_letter = models.TextField(verbose_name=_("Cover letter"))
+    resume_url = models.URLField(verbose_name=_("Resume url"), blank=True, null=True)
     status = models.CharField(
         _("Status the request"),
         max_length=12,

@@ -1,21 +1,16 @@
 from rest_framework.serializers import ModelSerializer
 
-from projects.models.tools_in_project import Tool, ToolsInProject
+from common.models.tools import Tool
+from projects.models.tools_in_project import ToolsInProject
 
 
 class ToolsSerializer(ModelSerializer):
     class Meta:
         model = Tool
-        fields = [
-            "tool_name",
-        ]
+        fields = "__all__"
 
 
 class ToolsInProjectSerializer(ModelSerializer):
     class Meta:
         model = ToolsInProject
-        fields = [
-            "tool",
-            "project",
-            "participants_needed",
-        ]
+        fields = "__all__"

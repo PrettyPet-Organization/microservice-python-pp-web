@@ -1,10 +1,10 @@
 # Here are functions that create test instances of specific application models
 
+from common.models.tags import Tag
 from projects.models.groups_for_projects import Group
 from projects.models.project_types import ProjectType
 from projects.models.projects import Project
 from projects.models.roles_in_project import Role, RolesInProject
-from projects.models.tags_in_project import Tag
 from projects.models.tools_in_project import Tool, ToolsInProject
 
 
