@@ -8,9 +8,20 @@ from datetime import datetime
 from random import choice
 
 class RandomTimeView(APIView):
-    ''' This function returns the dict {'country': contry, 'time': %H:%M:%S }
-    using the library pytz and datatime
-    the country_and_tz dictionary currently contains 24 entries'''
+    '''A representation function that returns a random country
+    and its time in the format '%H:%M:%S'
+
+    Provides the following actions:
+    by url 'common/random_time' returns the required data
+
+    Attributes:
+    - country_and_tz dictionary with the key country and the value time zone of the country
+    - country random country
+    - tz_name Press the time zone of this country
+    -current_time current time in the selected country.
+    To get this time the pytz and datetime library is used
+    '''
+
     def get(self, request):
         country_and_tz =  {
             "Россия": "Europe/Moscow",
