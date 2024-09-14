@@ -1,11 +1,13 @@
 # Here are functions that create test instances of specific application models
 
+from common.models.roles import Role
 from common.models.tags import Tag
+from common.models.tools import Tool
 from projects.models.groups_for_projects import Group
 from projects.models.project_types import ProjectType
 from projects.models.projects import Project
-from projects.models.roles_in_project import Role, RolesInProject
-from projects.models.tools_in_project import Tool, ToolsInProject
+from projects.models.roles_in_project import RolesInProject
+from projects.models.tools_in_project import ToolsInProject
 
 
 def create_instance_common():

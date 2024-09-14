@@ -1,9 +1,9 @@
 from rest_framework.serializers import ModelSerializer
 
+from common.serializers.tags import TagsSerializer
 from projects.models.projects import Project
 from projects.serializers.groups_for_project import GroupSerializer
 from projects.serializers.roles_in_project import RolesInProjectSerializer
-from projects.serializers.tags_in_project import TagsSerializer
 from projects.serializers.tools_in_project import ToolsInProjectSerializer
 
 
