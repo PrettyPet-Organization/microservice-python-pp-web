@@ -80,6 +80,7 @@ python manage.py runserver
 ```
 pip freeze > requirements.txt
 ```
+14. Длина строки <79 символов. 
 
 ## Состав приложений
 
