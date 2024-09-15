@@ -169,6 +169,10 @@ https://dbdiagram.io/d/Pretty-Pet-66c894f4a346f9518ce84d0f <br>
 Для упрощения работы в приложении созданы **команды make**, перечисленные ниже. Для их использования необходимо установить пакет **make** при помощи команды ```sudo apt-get install make```. Если у вас **windows**, вам необходимо установить **cmake** или работать через **wsl**.
 - ```make freeze``` - перезаписывает файл requirements.txt текущими зависимостями;
 - ```make install``` - устанавливает зависимости из файла requirements.txt;
+- ```make run``` - запускает сервер для разработки;
+- ```make makemigrations``` - создает миграции;
+- ```make migrate``` - выполняет миграции;
+- ```make automigrate``` - создает и выполняет миграции.
 
 ## <p align="center" >Всем добра!</p>
 <p align="center">
