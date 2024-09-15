@@ -1,6 +1,10 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from common.models.roles import Role
+from common.models.tags import Tag
+from common.models.tools import Tool
+
 
 class Project(models.Model):
     class ProjectStatus(models.TextChoices):
@@ -10,39 +14,41 @@ class Project(models.Model):
         FINISHED = "FN", _("Finished")
 
     project_type = models.ForeignKey(
-        _("Type for project"),
         to="ProjectType",
         on_delete=models.SET_NULL,
         null=True,
         related_name="projects",
+        verbose_name=_("Type for project"),
     )
-    project_name = models.CharField(_("Project name"), max_length=100)
-    core_idea = models.CharField(_("Core idea"), max_length=255)
-    description = models.TextField(_("Description"))
-    finish_date = models.DateField(_("End time for project"), null=True, blank=True)
+    project_name = models.CharField(verbose_name=_("Project name"), max_length=100)
+    core_idea = models.CharField(verbose_name=_("Core idea"), max_length=255)
+    description = models.TextField(verbose_name=_("Description"))
+    finish_date = models.DateField(
+        verbose_name=_("End time for project"), null=True, blank=True
+    )
     status = models.CharField(
-        _("Actual status"),
+        verbose_name=_("Actual status"),
         max_length=2,
         choices=ProjectStatus.choices,
         default=ProjectStatus.NOT_STARTED,
     )
     tools = models.ManyToManyField(
-        _("Tools for project"),
-        to="Tool",
+        to=Tool,
         through="ToolsInProject",
         related_name="projects",
+        verbose_name=_("Tools for project"),
     )
     roles = models.ManyToManyField(
-        _("Role for project"),
-        to="Role",
+        to=Role,
         through="RolesInProject",
         related_name="projects",
+        verbose_name=_("Role for project"),
     )
     tags = models.ManyToManyField(
-        _("Tags for project"), to="Tag", related_name="projects"
+        to=Tag, related_name="projects", verbose_name=_("Tags for project")
     )
     groups = models.ManyToManyField(
-        _("Groups for project"), to="Group", related_name="projects"
+        to="Group", related_name="projects", verbose_name=_("Groups for project")
     )
 
     @property

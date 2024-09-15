@@ -13,4 +13,4 @@ class ParticipantSerializer(ModelSerializer):
 
     class Meta:
         model = ParticipantInProject
-        fields = ["project", "profile", "roles", "tools", "groups"]
+        fields = "__all__"

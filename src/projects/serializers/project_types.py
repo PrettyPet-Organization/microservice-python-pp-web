@@ -6,6 +6,4 @@ from projects.models.project_types import ProjectType
 class RolesSerializer(ModelSerializer):
     class Meta:
         model = ProjectType
-        fields = [
-            "type_name",
-        ]
+        fields = "__all__"

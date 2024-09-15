@@ -6,6 +6,4 @@ from projects.models.groups_for_projects import Group
 class GroupSerializer(ModelSerializer):
     class Meta:
         model = Group
-        fields = [
-            "group_name",
-        ]
+        fields = "__all__"
