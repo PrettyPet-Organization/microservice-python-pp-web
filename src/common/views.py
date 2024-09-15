@@ -1,13 +1,14 @@
-from django.shortcuts import render
-from rest_framework.request import Request
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from django.utils.translation import gettext_lazy as _
-
 from datetime import datetime
 from random import choice
-import pytz
+
 import pycountry
+import pytz
+from django.shortcuts import render
+from django.utils.translation import gettext_lazy as _
+from rest_framework.request import Request
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 
 class RandomTimeView(APIView):
     """
@@ -25,8 +26,11 @@ class RandomTimeView(APIView):
     def get(self, request: Request) -> Response:
         random_country = choice(list(pycountry.countries))
         country_name = _(random_country.name)
-        tz_name = pytz.timezone(pytz.country_timezones.get(random_country.alpha_2, [])[0])
+        tz_name = pytz.timezone(
+            pytz.country_timezones.get(random_country.alpha_2, [])[0]
+        )
         current_time = datetime.now(tz_name)
 
-        return Response({'country': country_name, 'time': current_time.strftime("%H:%M:%S")})
-
+        return Response(
+            {"country": country_name, "time": current_time.strftime("%H:%M:%S")}
+        )
