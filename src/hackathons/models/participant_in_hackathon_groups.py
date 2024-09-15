@@ -12,3 +12,4 @@ class ParticipantInHackathonGroups(models.Model):
 
     def __str__(self):
         return f'{self.participant_id} | {self.group_id}'
+

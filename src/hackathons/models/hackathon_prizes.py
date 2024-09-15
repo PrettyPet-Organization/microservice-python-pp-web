@@ -5,9 +5,9 @@ from hackathons.models.hackathons import Hackathons
 
 class HackathonPrizes(models.Model):
     prize_id = models.ManyToManyField(to=Hackathons, verbose_name=_("prize id"))
-    name = models.CharField(verbose_name=_("name"))
-    description = models.CharField(verbose_name=_("description"))
-    image_url = models.CharField(verbose_name=_("image url"))
+    name = models.CharField(verbose_name=_("name"), blank=True, null=True)
+    description = models.CharField(verbose_name=_("description"), blank=True, null=True)
+    image_url = models.CharField(verbose_name=_("image url"), blank=True, null=True)
 
     def __str__(self):
         return f'{self.prize_id} | {self.name}'
