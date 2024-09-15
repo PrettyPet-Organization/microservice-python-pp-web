@@ -1,6 +1,5 @@
 # Созданы модели:
 
-
 ## 1. Project
 
 1. project_name: CharField
@@ -18,25 +17,25 @@
 
 1. type_name: CharField
 
-## 3. Role + RolesInProject
-1. role_name: CharField
-2. role: ForeignKey(to=Role)
-3. project: ForeignKey(to=Project)
-4. participants_needed: PositiveIntegerField
+## 3.RolesInProject
+1. role: ForeignKey(to=Role)
+2. project: ForeignKey(to=Project)
+3. participants_needed: PositiveIntegerField
 
-## 4. Tool + ToolsInProject
-1. tool_name: CharField
-2. tool: ForeignKey(to=Tool)
-3. project: ForeignKey(to=Project)
-4. participants_needed: PositiveIntegerField
+## 4. ToolsInProject
+1. tool: ForeignKey(to=Tool)
+2. project: ForeignKey(to=Project)
+3. participants_needed: PositiveIntegerField
 
 ## 5. Tag
 1. tag_name = CharField
 
 ## 6. Group
+
 1. group_name = CharField
 
 ## 7. ParticipantInProject
+
 1. project: ForeignKey(to=Project)
 2. profile: ForeignKey(to=Profile)
 3. roles: ManyToManyField(to=Role, through=RolesInProject)
@@ -44,14 +43,15 @@
 5. groups: ManyToManyField(to=Group)
 
 ## 8. ProjectParticipationRequest
+
 1. profile: ForeignKey(to=Profile)
 2. project: ForeignKey(to=Project)
 3. cover_letter: TextField
 4. resume_url: URLField
 5. status: CharField
 
-
 # Для запуска скрипта:
+
 ```bash
 python manage.py makemigrations
 python manage.py migrate
@@ -59,6 +59,7 @@ python manage.py create_instance_projects
 ```
 
 # Также для всех моделей созданы сериализаторы
+
 ## Пример на проекте
 
     class ProjectsSerializer(ModelSerializer):
