@@ -23,7 +23,7 @@ pathspec==0.12.1
 pillow==10.4.0
 platformdirs==4.2.2
 pre-commit==3.8.0
-pycountry==24.6.1
+pycountry==23.12.11
 PyJWT==2.9.0
 python-dotenv==1.0.1
 pytz==2024.2
