@@ -12,7 +12,7 @@ class ParticipantInHackathonTools(models.Model):
         verbose_name=_("participant id"),
     )
     tool = models.ForeignKey(
-        to=Tool, null=True, on_delete=models.SET_NULL, verbose_name=_("tool id")
+        to=Tool, null=True, on_delete=models.SET_NULL, verbose_name=_("tool")
     )
 
     def __str__(self):
