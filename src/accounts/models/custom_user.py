@@ -12,9 +12,9 @@ class CustomUser(AbstractUser):
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
-    email = models.EmailField(_("Email"), unique=True, max_length=255)
+    email = models.EmailField(verbose_name=_("Email"), unique=True, max_length=255)
     phone_number = models.CharField(
-        _("Phone number"),
+        verbose_name=_("Phone number"),
         unique=True,
         blank=True,
         null=True,
@@ -23,11 +23,13 @@ class CustomUser(AbstractUser):
         validators=[validate_phone_number],
     )
     password = models.CharField(
-        _("User password"), validators=[validate_password], max_length=255
+        verbose_name=_("User password"), validators=[validate_password], max_length=255
     )
     first_name = None
     last_name = None
-    code_word = models.CharField(_("Code word for entry"), max_length=12, blank=True)
+    code_word = models.CharField(
+        verbose_name=_("Code word for entry"), max_length=12, blank=True
+    )
 
     objects = CustomUserManager()
 

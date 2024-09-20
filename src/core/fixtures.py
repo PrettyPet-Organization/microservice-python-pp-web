@@ -1,7 +1,6 @@
 # Here are functions that create test instances of specific application models
 
 from accounts.models.custom_user import CustomUser
-from common.models.tags import Tag
 from hackathons.models.groups_for_hackathons import GroupsForHackathon
 from hackathons.models.groups_in_hackathon import GroupsInHackathon
 from hackathons.models.hackathon_participation_request import (
@@ -16,11 +15,16 @@ from hackathons.models.participant_in_hackathon_roles import ParticipantInHackat
 from hackathons.models.participant_in_hackathon_tools import ParticipantInHackathonTools
 from hackathons.models.participants_in_hackathon import ParticipantsInHackathon
 from profiles.models.profiles import Profile
+
+from common.models.roles import Role
+from common.models.tools import Tool
+from common.models.tags import Tag
+
 from projects.models.groups_for_projects import Group
 from projects.models.project_types import ProjectType
 from projects.models.projects import Project
-from projects.models.roles_in_project import Role, RolesInProject
-from projects.models.tools_in_project import Tool, ToolsInProject
+from projects.models.roles_in_project import RolesInProject
+from projects.models.tools_in_project import ToolsInProject
 
 
 def create_instance_common():
