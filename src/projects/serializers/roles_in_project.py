@@ -1,13 +1,7 @@
 from rest_framework.serializers import ModelSerializer
 
-from common.models.roles import Role
+from common.serializers.roles import RoleSerializer
 from projects.models.roles_in_project import RolesInProject
-
-
-class RoleSerializer(ModelSerializer):
-    class Meta:
-        model = Role
-        fields = "__all__"
 
 
 class RolesInProjectSerializer(ModelSerializer):
