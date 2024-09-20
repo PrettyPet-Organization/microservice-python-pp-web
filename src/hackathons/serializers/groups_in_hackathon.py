@@ -3,10 +3,7 @@ from rest_framework.serializers import ModelSerializer
 from hackathons.models.groups_in_hackathon import GroupsInHackathon
 
 
-class GroupsInHackathonsSerializer(ModelSerializer):
+class GroupInHackathonsSerializer(ModelSerializer):
     class Meta:
         model = GroupsInHackathon
-        fields = [
-            "group_id",
-            "hackathon_id"
-        ]
+        fields = "__all__"

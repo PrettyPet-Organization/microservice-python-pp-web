@@ -1,12 +1,17 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from hackathons.models.hackathons import Hackathons
-from projects.models.tags_in_project import Tag
+
+from common.models.tags import Tag
+from hackathons.models.hackathons import Hackathon
 
 
 class TagsInHackathon(models.Model):
-    hackathon_id = models.ForeignKey(to=Hackathons, verbose_name=_('hackathon id'), on_delete=models.CASCADE)
-    tag_id = models.ForeignKey(to=Tag, verbose_name=_('tag id'), on_delete=models.SET_NULL)
+    hackathon = models.ForeignKey(
+        to=Hackathon, null=True, on_delete=models.SET_NULL, verbose_name=_("hackathon")
+    )
+    tag = models.ForeignKey(
+        to=Tag, null=True, on_delete=models.SET_NULL, verbose_name=_("tag")
+    )
 
     def __str__(self):
-        return f'{self.hackathon_id} | {self.tag_id}'
+        return f"{self.hackathon} | {self.tag}"

@@ -1,116 +1,83 @@
 # Here are functions that create test instances of specific application models
 
+from accounts.models.custom_user import CustomUser
 from common.models.tags import Tag
+from hackathons.models.groups_for_hackathons import GroupsForHackathon
+from hackathons.models.groups_in_hackathon import GroupsInHackathon
+from hackathons.models.hackathon_participation_request import (
+    HackathonParticipationRequest,
+)
+from hackathons.models.hackathon_prizes import HackathonPrizes
+from hackathons.models.hackathons import Hackathon
+from hackathons.models.participant_in_hackathon_groups import (
+    ParticipantInHackathonGroups,
+)
+from hackathons.models.participant_in_hackathon_roles import ParticipantInHackathonRoles
+from hackathons.models.participant_in_hackathon_tools import ParticipantInHackathonTools
+from hackathons.models.participants_in_hackathon import ParticipantsInHackathon
+from profiles.models.profiles import Profile
 from projects.models.groups_for_projects import Group
 from projects.models.project_types import ProjectType
 from projects.models.projects import Project
 from projects.models.roles_in_project import Role, RolesInProject
 from projects.models.tools_in_project import Tool, ToolsInProject
-# Импорт профиля
-from profiles.models.profiles import Profile
-from accounts.models.custom_user import CustomUser
-from profiles.models.cities import City
-# Импорт хакатона
-from hackathons.models.hackathons import Hackathons
-from hackathons.models.hackathon_prizes import HackathonPrizes
-from hackathons.models.groups_in_hackathon import GroupsInHackathon
-from hackathons.models.groups_for_hackathons import GroupsForHackathons
-from hackathons.models.participants_in_hackathon import ParticipantsInHackathon
-from hackathons.models.participant_in_hackathon_groups import ParticipantInHackathonGroups
-from hackathons.models.participant_in_hackathon_roles import ParticipantInHackathonRoles
-from hackathons.models.participant_in_hackathon_tools import ParticipantInHackathonTools
-from hackathons.models.hackathon_participation_request import HackathonParticipationRequest
+
 
 def create_instance_common():
     pass
 
 
 def create_instance_hackathons():
-    # Создание пользователя
-    customuser = CustomUser.objects.create(
-        email='example@example.com',
-        password='password123D',
-        code_word='CustomUser'
+
+    hackathon = Hackathon.objects.create(
+        name="Hackathons New",
+        core_idea="Core idea",
+        task="lorem task",
+        image_url="lorem",
     )
 
-    # Создание города для пользователя
-    city = City.objects.create(
-        name='Example',
-        slug='example'
+    hackathonsprize = HackathonPrizes.objects.create(
+        prize=hackathon,
+        name="Example Hackathons Prizes",
+        description="Example Hackathons Prizes Description",
     )
 
-    # Создание профиля пользователя
-    profile = Profile.objetcs.create(
-        user=customuser,
-        city=city,
-        public_name='ExampleProfile',
-        age='20'
-
+    groupinhackathon = GroupsInHackathon.objects.create(hackathon=hackathon)
+    groupforhackathon = GroupsForHackathon.objects.create(
+        group=groupinhackathon, group_name="Example Group for Hackathons"
     )
 
-    # Создание Хакатона
-    hackathons = Hackathons.objects.create(
-        type_id=1,
-        name='Hackathons New',
-        core_idea='Core idea',
-        task='lorem task',
-        image_url='lorem',
-        prize_id='1',
+    participantinhackathon = ParticipantsInHackathon.objects.create(
+        hackathon=hackathon,
     )
 
-    # Создание Призов Хакатона
-    hackathonsprizes = HackathonPrizes.objects.create(
-        prize_id=hackathons,
-        name='Example Hackathons Prizes',
-        description='Example Hackathons Prizes Description'
+    participantinhackathongroup = ParticipantInHackathonGroups.objects.create(
+        participant=participantinhackathon, group=groupforhackathon
     )
 
-    # Создание Группы Хакатона
-    groupinhackathon = GroupsInHackathon.objects.create(
-        group_id=1,
-        hackathon_id=hackathons
-    )
-    groupforhackathon = GroupsForHackathons.objects.create(
-        group_id=groupinhackathon,
-        group_name='Example Group for Hackathons'
-    )
-
-    # Создание Участника Хакатона
-    participantsinhackathon = ParticipantsInHackathon.objects.create(
-        participant_id=1,
-        hackathon_id=hackathons,
-        profile_id=profile
-    )
-
-    # Создание Группы Участника Хакатона
-    participantsinhackathongroup = ParticipantInHackathonGroups.objects.create(
-        participant_id=participantsinhackathon,
-        group_id=groupforhackathon
-    )
-
-    # Создание Роли Участника Хакатона
     role = Role.objects.create(role_name="Participants")
 
-    # Создание Роли Участника хакатона
-    participantsinhackathonroles = ParticipantInHackathonRoles.objects.create(
-        participant_id=participantsinhackathon,
-        role_id=role
+    participantinhackathonrole = ParticipantInHackathonRoles.objects.create(
+        participant=participantinhackathon, role=role
     )
 
-    # Создание Инструмента
     tool = Tool.objects.create(tool_name="Git")
 
-    # Создание Инструмета для Участников Хакатона
-    participantsinhackathontools = ParticipantInHackathonTools.objects.create(
-        participant_id=participantsinhackathon,
-        tool_id=tool
+    participantinhackathontool = ParticipantInHackathonTools.objects.create(
+        participant=participantinhackathon, tool=tool
     )
 
-    # Создание Обращение Участника
-    participantsinhackathonrequest = HackathonParticipationRequest.objects.create(
-        profile_id=tool,
-        hackathon_id=hackathons
+    user = CustomUser.objects.create_user(
+        username="existinguser1",
+        email="existinguser1@example.com",
+        password="Testpassword123",
     )
+    profile = Profile.objects.create(user=user)
+
+    participantinhackathonrequest = HackathonParticipationRequest.objects.create(
+        profile=profile, hackathon=hackathon
+    )
+
 
 def create_instance_profiles():
     pass

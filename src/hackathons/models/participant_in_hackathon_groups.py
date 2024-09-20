@@ -1,15 +1,22 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from participants_in_hackathon import ParticipantsInHackathon
-from groups_for_hackathons import GroupsForHackathons
+
+from hackathons.models.groups_for_hackathons import GroupsForHackathon
+from hackathons.models.participants_in_hackathon import ParticipantsInHackathon
 
 
 class ParticipantInHackathonGroups(models.Model):
-    participant_id = models.ForeignKey(to=ParticipantsInHackathon,
-                                       verbose_name=_("participant id"), on_delete=models.CASCADE)
-    group_id = models.ForeignKey(to=GroupsForHackathons,
-                                 verbose_name=_("group id"), on_delete=models.CASCADE)
+    participant = models.ForeignKey(
+        to=ParticipantsInHackathon,
+        on_delete=models.CASCADE,
+        verbose_name=_("participant"),
+    )
+    group = models.ForeignKey(
+        to=GroupsForHackathon,
+        null=True,
+        on_delete=models.SET_NULL,
+        verbose_name=_("group"),
+    )
 
     def __str__(self):
-        return f'{self.participant_id} | {self.group_id}'
-
+        return f"{self.participant} | {self.group}"

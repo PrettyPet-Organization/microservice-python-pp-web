@@ -1,11 +1,16 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from groups_in_hackathon import GroupsInHackathon
+
+from hackathons.models.groups_in_hackathon import GroupsInHackathon
 
 
-class GroupsForHackathons(models.Model):
-    group_id = models.ForeignKey(to=GroupsInHackathon, verbose_name=_("group id"), on_delete=models.CASCADE)
-    group_name = models.CharField(verbose_name=_("group name"), blank=True, null=True)
+class GroupsForHackathon(models.Model):
+    group = models.ForeignKey(
+        to=GroupsInHackathon, on_delete=models.CASCADE, verbose_name=_("group")
+    )
+    group_name = models.CharField(
+        blank=True, null=True, max_length=40, verbose_name=_("group name")
+    )
 
     def __str__(self):
-        return f'{self.group_id} | {self.group_name}'
+        return f"{self.group} | {self.group_name}"
