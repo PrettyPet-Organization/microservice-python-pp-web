@@ -29,7 +29,7 @@
 - [x] test_hackathon_field: Проверка поля hackathon на уникальность создания с использованием одинакого нейминга
 
 
->Participant_in_hackathon
+>ParticipantInHackathonTest
 
 Где были выполненны следующие тесты:  
 - [x] test_succes_create_participant: Создается ли модель ParticipantInHackathon
