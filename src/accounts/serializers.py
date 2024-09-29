@@ -41,16 +41,12 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 
     def validate_email(self, value):
         if CustomUser.objects.filter(email=value).exists():
-            raise serializers.ValidationError(
-                _(messages.NOT_UNIQUE_EMAIL_ERROR_MESSAGE)
-            )
+            raise serializers.ValidationError(_(messages.NOT_UNIQUE_EMAIL_ERROR_MESSAGE))
         return value
 
     def validate(self, data):
         if data["password1"] != data["password2"]:
-            raise serializers.ValidationError(
-                _(messages.PASSWORDS_DONT_MATCH_ERROR_MESSAGE)
-            )
+            raise serializers.ValidationError(_(messages.PASSWORDS_DONT_MATCH_ERROR_MESSAGE))
         return data
 
     def create(self, validated_data):

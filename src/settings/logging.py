@@ -6,6 +6,7 @@ from pathlib import Path
 
 from settings.common import BASE_DIR
 
+
 LOGS_DIR = BASE_DIR.parent / "logs"
 
 # Create a directory if it doesn't exist

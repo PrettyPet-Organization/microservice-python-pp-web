@@ -2,7 +2,10 @@ import logging
 
 from django.utils.translation import gettext_lazy as _
 from drf_spectacular.utils import extend_schema
-from rest_framework import permissions, status
+from rest_framework import (
+    permissions,
+    status,
+)
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.views import (
@@ -12,8 +15,12 @@ from rest_framework_simplejwt.views import (
 )
 
 from accounts import messages
-from accounts.serializers import CustomTokenObtainPairSerializer, UserRegisterSerializer
+from accounts.serializers import (
+    CustomTokenObtainPairSerializer,
+    UserRegisterSerializer,
+)
 from settings import FAILED_LOGIN_ATTEMPTS_LIMIT
+
 
 # Creating a logger
 logger = logging.getLogger(__name__)

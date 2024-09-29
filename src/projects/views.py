@@ -1,4 +1,7 @@
-from rest_framework.viewsets import GenericViewSet, mixins
+from rest_framework.viewsets import (
+    GenericViewSet,
+    mixins,
+)
 
 from projects.models.projects import Project
 from projects.serializers.projects import ProjectsSerializer
