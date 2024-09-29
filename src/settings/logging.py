@@ -3,6 +3,7 @@
 import logging
 import os
 from pathlib import Path
+from typing import Union
 
 from settings.common import BASE_DIR
 
@@ -24,7 +25,7 @@ class DebugAndInfoOnlyFilter(logging.Filter):
     such as WARNING, ERROR, or CRITICAL, will be ignored.
     """
 
-    def filter(self, record):
+    def filter(self, record: logging.LogRecord) -> Union[bool, logging.LogRecord]:
         """
         Determines whether the specified log record should be passed through the filter.
 
