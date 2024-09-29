@@ -1,6 +1,9 @@
 import inspect
 import logging.config
-from typing import Any, Optional
+from typing import (
+    Any,
+    Optional,
+)
 
 from django.utils.translation import gettext_lazy as _
 from rest_framework.request import Request

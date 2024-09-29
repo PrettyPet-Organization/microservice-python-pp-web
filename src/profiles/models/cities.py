@@ -9,11 +9,7 @@ class City(models.Model):
     Represents a city where users of the platform are from.
     """
 
-    city_name = models.CharField(
-        unique=True,
-        max_length=255,
-        verbose_name=_("City Name"),
-    )
+    city_name = models.CharField(unique=True, max_length=255, verbose_name=_("City Name"))
 
     def __str__(self):
         return self.city_name
