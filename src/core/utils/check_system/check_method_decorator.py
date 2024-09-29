@@ -8,7 +8,7 @@ from django.utils.functional import Promise
 
 
 _CHECK_SYSTEM_VIEW_TYPE = "CheckSystem"
-_METHOD_TO_CHECK_TYPE = Callable[[_CHECK_SYSTEM_VIEW_TYPE], bool]
+_METHOD_TO_CHECK_TYPE = Callable[[_CHECK_SYSTEM_VIEW_TYPE], Optional[bool]]
 _DECORATOR_RETURN_TYPE = Callable[[_CHECK_SYSTEM_VIEW_TYPE], None]
 _CHECK_METHOD_TYPE = Callable[[_METHOD_TO_CHECK_TYPE], _DECORATOR_RETURN_TYPE]
 

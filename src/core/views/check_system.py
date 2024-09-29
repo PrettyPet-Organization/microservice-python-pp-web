@@ -1,6 +1,6 @@
 import inspect
 import logging.config
-from typing import Any
+from typing import Any, Optional
 
 from django.utils.translation import gettext_lazy as _
 from rest_framework.request import Request
@@ -36,7 +36,7 @@ class CheckSystem(APIView):
         error_message=_("Logging is not configured in the project."),
         success_message=_("Logging is working!"),
     )
-    def check_logs(self) -> bool:
+    def check_logs(self) -> Optional[bool]:
         """
         Checks the logging configuration.
 
@@ -45,7 +45,6 @@ class CheckSystem(APIView):
         exceptions that may occur during the setup.
 
         :return: True if logging is configured correctly, False otherwise.
-        :rtype: bool
 
         :raises ImportError: If the logging.config module could not be imported.
         :raises KeyError: If a required key is missing from the logging configuration.
@@ -70,17 +69,13 @@ class CheckSystem(APIView):
         except Exception as e:
             print(_(f"An error occurred while setting up logging: {e}"))
 
-        return False
-
     def get(self, request: Request) -> Response:
         """
         Performs all checks and returns their results as a JSON response.
 
         :param request: The rest_framework Request object.
-        :type request: Request
 
         :return: Response with the results of all checks.
-        :rtype: Response
         """
 
         # Finds all methods that are checks (decorated with check_method)
