@@ -158,10 +158,10 @@ class Profile(Model):
 
     def save(
         self,
-        force_insert: bool | tuple[ModelBase, ...] = False,
+        force_insert: Union[bool, tuple[ModelBase, ...]] = False,
         force_update: bool = False,
-        using: str | None = None,
-        update_fields: Iterable[str] | None = None,
+        using: Optional[str] = None,
+        update_fields: Union[Iterable[str], None] = None,
     ) -> None:
         super().save(force_insert, force_update, using, update_fields)
 
