@@ -4,7 +4,6 @@ from random import choice
 
 import pycountry
 import pytz
-from django.shortcuts import render
 from django.utils.translation import gettext_lazy as _
 from rest_framework.request import Request
 from rest_framework.response import Response

@@ -5,7 +5,6 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from accounts import messages
 from accounts.models.custom_user import CustomUser
 from accounts.validators import validate_password
-from profiles.models.profiles import Profile
 
 
 class UserRegisterSerializer(serializers.ModelSerializer):
