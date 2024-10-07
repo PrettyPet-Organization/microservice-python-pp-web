@@ -16,5 +16,11 @@ class HackathonPrizes(models.Model):
         blank=True, null=True, max_length=100, verbose_name=_("image url")
     )
 
+    class Meta:
+        verbose_name = "Hackathon prize"
+        verbose_name_plural = "Hackathon prizes"
+
     def __str__(self):
-        return f"{self.prize} | {self.name}"
+        # return f"{self.prize} | {self.name}"
+        hackathons = ", ".join([hackathon.name for hackathon in self.prize.all()])
+        return f"{hackathons} | {self.name}"
