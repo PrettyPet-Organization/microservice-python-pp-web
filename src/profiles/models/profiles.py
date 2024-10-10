@@ -150,11 +150,11 @@ class Profile(Model):
             raise TypeError(_("Birth date should be a string in the format 'YYYY-MM-DD' or a datetime.date object"))
 
     def clean(self) -> None:
-        super().clean()
-
         self._validate_number_of_hobbies()
         self._validate_roles()
         self._validate_subscriptions()
+
+        super().clean()
 
     def save(
         self,
@@ -163,9 +163,8 @@ class Profile(Model):
         using: Optional[str] = None,
         update_fields: Union[Iterable[str], None] = None,
     ) -> None:
-        super().save(force_insert, force_update, using, update_fields)
-
         self.clean()
+        super().save(force_insert, force_update, using, update_fields)
 
     class Meta(TypedModelMeta):
         verbose_name = _("Profile")
