@@ -23,23 +23,17 @@ class AdminProfile(admin.ModelAdmin):
         "user",
         "public_name",
         "age",
-        "city_name",
+        "city__city_name",
         "photo_url",
     )
     search_fields = (
         "user__username",
         "public_name",
-        "city__name",
+        "city__city_name",
     )
     list_filter = ("city", "age")
 
     readonly_fields = ("photo_url",)
-
-    def city_name(self, obj):
-        """Display city name"""
-        return obj.city.name
-
-    city_name.short_description = "City"
 
 
 @admin.register(City)
@@ -55,5 +49,5 @@ class AdminCity(admin.ModelAdmin):
         search_fields (tuple): Searchable fields in the admin panel.
     """
 
-    list_display = ("name", "slug")
-    search_fields = ("name", "slug")
+    list_display = ("city_name",)
+    search_fields = ("city_name",)
