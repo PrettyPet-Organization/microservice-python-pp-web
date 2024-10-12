@@ -24,14 +24,14 @@ class ProjectViewSet(GenericViewSet, mixins.ListModelMixin):
     serializer_class = ProjectsSerializer
 
 
-class FrontPageProjectView(APIView):
+class ProjectsOverviewView(APIView):
     """
-    Return dynamic json to front end, for a front page projects table
+    Return dynamic json with a list of projects
     """
 
     def query_to_json(self, query):
         """
-        Convert a queryset of projects into a JSON serializable format.
+        Convert a queryset of projects into a json serializable format.
 
         Args:
             query: A queryset of Project instances.
@@ -188,4 +188,3 @@ class FrontPageProjectView(APIView):
             finished_projects
         )
         return Response({"projects": res[:6]}, status=status.HTTP_200_OK)
-    
