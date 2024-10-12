@@ -1,0 +1,13 @@
+# temporary files
+logs/
+*.log
+
+# documentation
+*.md
+README_FILES/
+*.svg
+
+# dependencies and environments
+venv/
+*.pyc
+__pycache__/
