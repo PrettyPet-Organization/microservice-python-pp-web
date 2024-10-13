@@ -1,0 +1,15 @@
+services:
+  django-microservice:
+    build: .
+    command: sh -c "cd opt/app && Docker/start.sh"
+    volumes:
+      - .:/app
+      - sqlite_data:/app/db.sqlite3
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: sqlite:////app/db.sqlite3
+
+
+volumes:
+  sqlite_data:
