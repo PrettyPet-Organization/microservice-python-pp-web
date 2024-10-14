@@ -1,25 +1,19 @@
 # Here are functions that create test instances of specific application models
 
 from accounts.models.custom_user import CustomUser
+from common.models.roles import Role
+from common.models.tags import Tag
+from common.models.tools import Tool
 from hackathons.models.groups_for_hackathons import GroupsForHackathon
 from hackathons.models.groups_in_hackathon import GroupsInHackathon
-from hackathons.models.hackathon_participation_request import (
-    HackathonParticipationRequest,
-)
+from hackathons.models.hackathon_participation_request import HackathonParticipationRequest
 from hackathons.models.hackathon_prizes import HackathonPrizes
 from hackathons.models.hackathons import Hackathon
-from hackathons.models.participant_in_hackathon_groups import (
-    ParticipantInHackathonGroups,
-)
+from hackathons.models.participant_in_hackathon_groups import ParticipantInHackathonGroups
 from hackathons.models.participant_in_hackathon_roles import ParticipantInHackathonRoles
 from hackathons.models.participant_in_hackathon_tools import ParticipantInHackathonTools
 from hackathons.models.participants_in_hackathon import ParticipantsInHackathon
 from profiles.models.profiles import Profile
-
-from common.models.roles import Role
-from common.models.tools import Tool
-from common.models.tags import Tag
-
 from projects.models.groups_for_projects import Group
 from projects.models.project_types import ProjectType
 from projects.models.projects import Project
@@ -78,13 +72,7 @@ def create_instance_hackathons():
     )
     profile = Profile.objects.create(user=user)
 
-    participantinhackathonrequest = HackathonParticipationRequest.objects.create(
-        profile=profile, hackathon=hackathon
-    )
-
-
-def create_instance_profiles():
-    pass
+    participantinhackathonrequest = HackathonParticipationRequest.objects.create(profile=profile, hackathon=hackathon)
 
 
 def create_instance_projects():
